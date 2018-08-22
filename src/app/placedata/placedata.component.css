@@ -1,0 +1,14 @@
+.text-center {
+    text-align: center;
+    padding: 5px;
+}
+img {
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+}
+
+  .active{
+    background-color: brown;
+    padding: 5px;
+}

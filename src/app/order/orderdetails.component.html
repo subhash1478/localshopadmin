@@ -1,0 +1,95 @@
+<section class="content">
+    <a  [routerLink]="['/order']">x close</a>
+   
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Product order ID #{{orderList.orderid}}</th>
+                <th>Quantity</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">SubTotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let item of cart">
+                <td class="col-sm-8 col-md-6">
+                    <div class="media">
+                        <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{item.productid.title}}</h4>
+                            <h5 class="media-heading">order by {{item.userid.firstname}} {{item.userid.lastname}}</h5>
+                            <h5 class="media-heading"> Shop  {{item.shopid.title}} </h5>
+                            <h5 class="media-heading"> Order date  {{orderList.createdAt|date}} </h5>
+                            <h5 class="media-heading"> Status   
+ {{(orderList.status===0)?'pending':'delivered'}} 
+
+                            </h5>
+                        </div>
+                    </div></td>
+                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                        {{item.quantity}}                </td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong> {{item.productid.price|currency:'INR'}} </strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong> {{item.productid.price*item.quantity|currency:'INR'}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Driver 
+
+                            <span class="label label-success" *ngIf="orderList.driverid">
+                                    {{orderList.driverid.driver_first_name}}
+                                    {{orderList.driverid.driver_last_name}} 
+
+                                </span>  
+                                 is assigned
+                          </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Delivered fee</h5></td>
+                        <td class="text-right"><h5><strong>{{orderList.deliveredfee|currency:'INR'}}</strong></h5></td>
+                    </tr> <tr>
+                        <td>   <div *ngIf="orderList.status==0">choose another driver
+                                <select  (change)="assignDriver($event)"
+                                >
+                                    <option>select</option>
+     <option *ngFor="let item of driverList" [value]="item.id">{{item.driver_first_name}} {{item.driver_last_name}}</option>
+                                </select>
+                            
+                            </div>    </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Discount</h5></td>
+                        <td class="text-right"><h5><strong>{{orderList.discount|currency:'INR'}}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>cgst</h5></td>
+                        <td class="text-right"><h5><strong>{{orderList.cgst|currency:'INR'}}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>sgst</h5></td>
+                        <td class="text-right"><h5><strong>{{orderList.sgst|currency:'INR'}}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Total</h5></td>
+                        <td class="text-right"><h5><strong>{{orderList.totalprice|currency:'INR'}}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                            <button type="button" class="btn btn-success">
+                                Proceessed
+                            </button></td>
+                            <td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>

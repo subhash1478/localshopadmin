@@ -1,0 +1,181 @@
+<app-sidemenu></app-sidemenu>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Data Tables
+      <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Tables</a></li>
+      <li class="active">Data tables</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Post Management</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="topnav">
+                <a data-toggle="modal" (click)="action('add')" data-target="#myModal">Add</a>
+
+                <select name="category"  [(ngModel)]="categorysearch" (ngModelChange)="onChange($event)">
+                <option value="">select</option>
+                 <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
+                </select>
+
+                <div class="search-container">
+                  <input type="text" placeholder="Search.." name="search"  [(ngModel)]="searchpost">
+                </div>
+              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">image</th>
+                    <th scope="col">category</th>
+                    <th scope="col">Viwed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of post|search:searchpost;let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td> <a [routerLink]="['/product-category/category', item._id]">{{item.title}}</a> </td>
+                    <td>
+                      <dir *ngIf="item.images!=''"> <img [src]="item.images" width="50" height="50" /></dir>
+                      
+                    </td>
+                    <td> {{item.category.title}} </td>
+                    <td>{{item.viwed}} </td>
+                    <td>
+                      <button type="button" class="btn btn-info btn-xs" [routerLink]="['id',item._id]">View</button>
+                      <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
+                      <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" (click)="openTag(item)" data-target="#tagModal">tag</button>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="delete(item)"  >delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{crud|uppercase}} Category</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box box-primary">
+          <div class="box-body">
+             
+            <div class="form-group">
+              <div class="form-group">
+                <label for="">Category</label>
+                <select name="category" class="form-control" [(ngModel)]="cat.category">
+                  <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">User</label>
+                <select name="user" class="form-control" [(ngModel)]="cat.userid">
+                  <option *ngFor="let item of user" [value]="item._id">{{item.firstname}} {{item.lastname}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInput1">Title</label>
+                <input type="text" name="title" class="form-control" placeholder="" [(ngModel)]="cat.title">
+              </div>
+              <div class="form-group">
+                <label for="exampleInput1">address</label>
+                <input type="text" name="title" class="form-control" placeholder="" [(ngModel)]="cat.address">
+              </div>  
+              <!--  -->
+              <div class="form-group" *ngFor="let item of timing">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="exampleInput1" >{{item.date}}</label>
+                  </div>
+                  <div class="col-md-6">   
+                    <input type="time"   [(ngModel)]="item.starttime">
+                    <input type="time"  [(ngModel)]="item.endtime">
+                  </div>
+                </div>
+              </div>  
+              <div class="form-group">
+                <label for="exampleInput1">phone</label>
+                <input type="tel" name="phone" class="form-control" placeholder="" [(ngModel)]="cat.phone">
+              </div>  
+              <div class="form-group">
+                <label for="exampleInput1">rating</label>
+                <input type="number" name="rating" class="form-control" placeholder="" [(ngModel)]="cat.rating">
+              </div>  
+              <div class="form-group">
+                <label for="exampleInput1">website</label>
+                <input type="url" name="website" class="form-control" placeholder="" [(ngModel)]="cat.website">
+              </div>
+              <div class="form-group">
+                <label for="exampleInput1">Description</label>
+                <app-ngx-editor [spellcheck]="true" [(ngModel)]="cat.description"></app-ngx-editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="addPost()">Add</button>
+        </div>
+        <div class="form-group" *ngIf="this.crud=='edit'">
+          <label for="exampleInput1">Image</label>
+          <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+          <button (click)="fileInput.click()">Select File</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="tagModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{crud|uppercase}} Category</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="form-group">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInput1">Add tag</label>
+          <input type="text" name="tag" class="form-control" placeholder="" [(ngModel)]="tagval.title">
+          <button (click)="addTag()">add</button>
+        </div>
+        <h4><p>selected tag</p></h4>
+        <ul class="tags">
+          <li *ngFor="let item of selectedtags;let i = index">
+            <a (click)="deleteTag(item,i)" class="tag selected">{{item}}</a>
+          </ul>
+          <h4><p>suggestion tag</p></h4>
+          <ul class="tags">
+            <li *ngFor="let item of tag;let i = index">
+              <a (click)="selectTag(item.tagname)" class="tag "> {{item.tagname}}</a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>

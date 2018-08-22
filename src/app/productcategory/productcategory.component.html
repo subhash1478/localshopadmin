@@ -1,0 +1,81 @@
+<app-sidemenu></app-sidemenu>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Data Tables
+      <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Tables</a></li>
+      <li class="active">Data tables</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Product Category   Management</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')"  data-target="#myModal">Add</button>
+              <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="post" (change)="changeValue($event)"></ngx-select-dropdown>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Shop name</th>
+                     <!-- <th scope="col">Action</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of ProductCategory;let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td> <a [routerLink]="['/product', item.id]">{{item.title}}</a> </td>
+                    <td> <a [routerLink]="['/product', item.id]">{{item.shopid.title}}</a> </td>
+
+                     <!-- <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
+                      <td> <button type="button" class="btn btn-danger btn-xs" 
+                         (click)="delete(item)"  >Delete</button>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>  </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{crud|uppercase}} Category</h4>
+          </div>
+          <div class="modal-body">
+            <div class="box box-primary">
+              <div class="box-body">
+           
+           
+                <div class="form-group">
+                  <label for="exampleInput1">Title</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.title"  >
+                </div>
+               
+ 
+
+              </div>
+            </div>
+            <button type="button" class="btn btn-default"  (click)="addCategory()" >{{crud|uppercase}}</button>
+          </div>
+        </div>
+      </div>
+    </div>

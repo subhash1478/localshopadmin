@@ -1,0 +1,102 @@
+<app-sidemenu></app-sidemenu>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Data Tables
+      <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Driver</a></li>
+      <li><a href="#">Tables</a></li>
+      <li class="active">Data tables</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Driver Management</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')"  data-target="#myModal">Add</button>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">address</th>
+                    <th scope="col">phone</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of driverList;let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>  {{item.driver_first_name}} {{item.driver_last_name}} </td>
+                    <td>  {{item.driver_email}}  </td>
+                    <td>  {{item.driver_address}}  </td>
+                    <td>  {{item.driver_phone}}  </td>
+                     <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
+                      <td> <button type="button" class="btn btn-danger btn-xs" 
+                         (click)="delete(item)"  >Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>  </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{crud|uppercase}} Category</h4>
+          </div>
+          <div class="modal-body">
+            <div class="box box-primary">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInput1">FirstName</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.driver_first_name"  >
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput1">LastName</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.driver_last_name"  >
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput1">Email</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.driver_email"  >
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInput1">password</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.driver_password"  >
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInput1">address</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.driver_address"  >
+                </div>
+
+              
+                <div class="form-group">
+                  <label for="exampleInput1">Phone</label>
+                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.driver_phone"  >
+                </div>
+
+
+              </div>
+            </div>
+            <button type="button" class="btn btn-default"  (click)="addCategory()" >{{crud|uppercase}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
