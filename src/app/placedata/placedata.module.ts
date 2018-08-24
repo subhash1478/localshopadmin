@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlacedataRoutingModule } from './placedata-routing.module';
-
+import { SharedModule } from '../shared/shared.module';
+import { PlacedataComponent } from './placedata.component';
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule,SharedModule,
     PlacedataRoutingModule
   ],
-  declarations: []
+  declarations: [PlacedataComponent]
 })
 export class PlacedataModule { }

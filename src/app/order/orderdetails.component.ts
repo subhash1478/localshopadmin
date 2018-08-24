@@ -3,8 +3,7 @@ import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { log } from 'util';
-@Component({
+ @Component({
   selector: 'app-orderdetails',
   templateUrl: './orderdetails.component.html',
 })

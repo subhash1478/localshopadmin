@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductcategoryComponent implements OnInit {
   selectedFile: File;
   filedata: FormData;
+  singleSelect:number
   cat: any = {}
   crud: string;
   ProductCategory: any = [];

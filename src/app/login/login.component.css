@@ -9,3 +9,7 @@ mat-card {
   .full-width-input {
     width: 100%;
   }
+
+  .login-logo{
+    color: aliceblue;
+  }
