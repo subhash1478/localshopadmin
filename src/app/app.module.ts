@@ -11,20 +11,16 @@ import { AuthGuardService } from './auth-guard.service';
 import { MaterialModule } from './material.module';
 import { SharedModule } from './shared/shared.module';
 import { NgChatModule } from 'ng-chat';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { FormsModule } from '@angular/forms'; 
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
-
+ 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
   ],
-  imports: [MaterialModule,SharedModule,   NgChatModule,    FormsModule,
-    HttpModule,
-    SocketIoModule.forRoot(config) ,
+  imports: [MaterialModule,SharedModule,   NgChatModule,   
+    
     BrowserModule, AppRouting, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()
   ],
   providers: [DataService,AuthGuardService],

@@ -1,47 +1,63 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
-interface  user{
-  firstname:String,
-  lastname:String,
-  location:String,
-  address:String,
-  category:String,
-  phone:String,
-  email:String,
-  password:String,
-  state:String,
-  city:String,
-  zip:String,
-  country:String,
-  rating:Number,
-  shopname:String,
-  online:String,
-  profile_image:String,
-  type:String,
-  facebook_id:String,
-  about:String,
-  birthday:String,
-}
+import { ChatAdapter } from 'ng-chat';
+import { SocketIOAdapter } from '../socketio-adapter'
+import { Socket } from 'ngx-socket-io';
+import { Http } from '@angular/http';
+  
+ 
+ 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+ 
 export class DashboardComponent implements OnInit {
-  crud: string;
+  title = 'app';
+  
+  userId: string;
+  username: string;
+
+  public adapter: ChatAdapter;
+ 
+
+   crud: string;
   user:any={}
   vendorList: any=[];
   category: any=[];
-
-  constructor( public _services:DataService,public toastr: ToastrService, vcr: ViewContainerRef) {
  
-  }
 
+  constructor(private socket: Socket, private http: Http,
+    
+   public _services:DataService,public toastr: ToastrService, vcr: ViewContainerRef) {
+    this.InitializeSocketListerners();  
+   
+
+  }
+  public InitializeSocketListerners(): void
+  {
+    this.socket.on("generatedUserId", (userId) => {
+      console.log('userId',userId);
+      
+      // Initializing the chat with the userId and the adapter with the socket instance
+      this.adapter = new SocketIOAdapter(userId, this.socket, this.http);
+      this.userId = userId;
+    });
+  }
   ngOnInit() {
     this._services.getVendor().subscribe((Response:any)=>{
-      this.vendorList=Response.data
+      let result=Response.data
+      this.vendorList=
       console.log(Response)
+
+      for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        this.socket.emit("join",element);
+
+      }
+
     })
 
     this._services.getCategory().subscribe((Response:any)=>{
