@@ -10,12 +10,21 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthGuardService } from './auth-guard.service'; 
 import { MaterialModule } from './material.module';
 import { SharedModule } from './shared/shared.module';
+import { NgChatModule } from 'ng-chat';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
   ],
-  imports: [MaterialModule,SharedModule,  
+  imports: [MaterialModule,SharedModule,   NgChatModule,    FormsModule,
+    HttpModule,
+    SocketIoModule.forRoot(config) ,
     BrowserModule, AppRouting, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()
   ],
   providers: [DataService,AuthGuardService],

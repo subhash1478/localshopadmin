@@ -8,15 +8,12 @@ const appRoutes: Routes = [
   {    path: 'driver',     loadChildren: './driver/driver.module#DriverModule'  },
   {    path: 'category',   loadChildren: './category/category.module#CategoryModule'  },
   {    path: 'order',    loadChildren: './order/order.module#OrderModule',    // ,
- 
 },
 {    path: 'promote',  loadChildren: './promote/promote.module#PromoteModule' },  
 {    path: 'product-category', loadChildren: './productcategory/productcategory.module#ProductcategoryModule' ,
-
 },
 {    path: 'product/:id',loadChildren: './product/product.module#ProductModule' ,   },
 {    path: 'post',loadChildren: './post/post.module#PostModule' , 
- 
 },
 {    path: 'placeapi',loadChildren: './placedata/placedata.module#PlacedataModule' ,    },
 {

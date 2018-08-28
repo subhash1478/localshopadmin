@@ -1,1 +1,25 @@
 <router-outlet></router-outlet>
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+ 
+ 
+    <div *ngIf="!userId" class="form-box">
+        <h3>Join room</h3>
+  
+        <small>Pick a username to join a ng-chat node.js room. Hint: Try different browsers or incognito tabs.</small>
+  
+        <form #chatInfoForm="ngForm" (ngSubmit)="joinRoom()">
+  
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   [(ngModel)]="username" name="name"
+                   #name="ngModel">
+  
+            <button type="submit" class="btn btn-success" [disabled]="!chatInfoForm.form.valid">Join</button>
+        </form>
+    </div>
+  </div>
+  
+  <ng-chat *ngIf="userId" [adapter]="adapter" [userId]="userId" [historyEnabled]="false"></ng-chat>
+  
