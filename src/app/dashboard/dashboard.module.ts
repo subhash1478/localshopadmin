@@ -8,7 +8,7 @@ import { HttpModule } from '@angular/http';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NgChatModule } from 'ng-chat';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'http://139.59.12.86:3001/', options: {} };
 @NgModule({
   imports: [
     CommonModule,SharedModule, SocketIoModule.forRoot(config) , NgChatModule,

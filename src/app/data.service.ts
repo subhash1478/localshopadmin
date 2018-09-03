@@ -109,4 +109,14 @@ export class DataService {
   assignDriver(data){
     return this._http.post(`${config.SAILS_API}/api/assign-driver`,data);
   }
+
+  getpromotelocation(){
+    return this._http.get(`${config.SAILS_API}/api/get-promoter-location`);
+
+  }
+
+  addLocation(data){
+    return this._http.post(`${config.SAILS_API}/api/add-promoter-location`,data);
+
+  }
 }

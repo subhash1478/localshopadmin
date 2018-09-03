@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this._services.getVendor().subscribe((Response:any)=>{
       let result=Response.data
-      this.vendorList=
+      this.vendorList=result
       console.log(Response)
 
       for (let index = 0; index < result.length; index++) {
