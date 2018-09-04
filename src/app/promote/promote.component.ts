@@ -26,7 +26,13 @@ export class PromoteComponent implements OnInit {
     this.getPromoteLocation()
   }
 
+  //
+  // ──────────────────────────────────────────────────────────────── I ──────────
+  //   :::::: A D D   P R O M O T E R : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
 
+  
 
   addCategory(){
     const uploadData = new FormData();
@@ -113,6 +119,6 @@ this.getPromoteLocation()
 
   })
 
-}
+} 
 
 }

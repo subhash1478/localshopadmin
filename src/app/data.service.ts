@@ -34,7 +34,7 @@ export class DataService {
   }
   addpromoter(data, action) {
     if (action == 'add') {
-      return this._http.post(`{config.API_ENDPOINT}/api/add-promoter`, data);
+      return this._http.post(`${config.API_ENDPOINT}/api/add-promoter`, data);
     } else {
       return this._http.post(`${config.API_ENDPOINT}/api/update-promoter`, data);
     }
@@ -119,4 +119,5 @@ export class DataService {
     return this._http.post(`${config.SAILS_API}/api/add-promoter-location`,data);
 
   }
+  
 }
