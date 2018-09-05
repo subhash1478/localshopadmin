@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class CategoryComponent implements OnInit {
   selectedFile: File;
   filedata: FormData;
-  cat: any = {}
+  cat: any = {};
   crud: string;
   category: any = [];
   constructor(public _services: DataService, public toastr: ToastrService, private _http: HttpClient, vcr: ViewContainerRef) {
@@ -18,23 +18,23 @@ export class CategoryComponent implements OnInit {
   }
   ngOnInit() {
     this._services.getCategory().subscribe((Response: any) => {
-      this.category = Response.data
-      console.log(Response)
-    })
+      this.category = Response.data;
+      console.log(Response);
+    });
   }
   addCategory() {
 
-    if( this.crud==='edit' ){
+    if ( this.crud === 'edit' ) {
       this._services.editCategory(this.cat).subscribe((Response: any) => {
-        if (Response.success == false) {
+        if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
         } else {
-          this.cat = {}
+          this.cat = {};
           this.toastr.success(Response.message, 'Success!');
-          this.ngOnInit()
+          this.ngOnInit();
         }
-      })
-    }else{
+      });
+    } else {
       const uploadData = new FormData();
       uploadData.append('category_image', this.selectedFile, this.selectedFile.name);
       uploadData.append('param', JSON.stringify(this.cat));
@@ -46,57 +46,57 @@ export class CategoryComponent implements OnInit {
       //       console.log(event); // handle event here
       //     });
       this._services.addCategory(uploadData, this.crud).subscribe((Response: any) => {
-        if (Response.success == false) {
+        if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
         } else {
-          this.cat = {}
+          this.cat = {};
           this.toastr.success(Response.message, 'Success!');
-          this.ngOnInit()
+          this.ngOnInit();
         }
-      })
+      });
     }
 
- 
-   
+
+
   }
   fileChange(event) {
-    let fileList: FileList = event.target.files;
+    const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
       formData.append('sampleFile', file, file.name);
-      this.filedata = formData
+      this.filedata = formData;
     }
   }
   edit(item) {
-    console.log(item)
-    this.crud = 'edit'
-    this.cat = item
+    console.log(item);
+    this.crud = 'edit';
+    this.cat = item;
     this._services.getTags(this.cat._id).subscribe((Response) => {
-      console.log(Response)
-    })
+      console.log(Response);
+    });
   }
   action(type) {
-    this.cat = {}
-    console.log(type)
-    this.crud = type
+    this.cat = {};
+    console.log(type);
+    this.crud = type;
   }
   onFileChanged(event) {
-    this.selectedFile = event.target.files[0]
+    this.selectedFile = event.target.files[0];
   }
-  delete(item){
-    const confirmAlert=confirm("Are you sure want to this item ?");
-    if(confirmAlert==true){
-      const tbl='category';
-      let obj={
-        catid:item._id
-      }
-      this._services.delete(tbl,obj).subscribe((response:any)=>{
-        if (response.success == false) {
+  delete(item) {
+    const confirmAlert = confirm('Are you sure want to this item ?');
+    if (confirmAlert === true) {
+      const tbl = 'category';
+      const obj = {
+        catid: item._id
+      };
+      this._services.delete(tbl, obj).subscribe((response: any) => {
+        if (response.success === false) {
           this.toastr.error(response.message, 'Alert!');
         } else {
           this.toastr.success(response.message, 'Success!');
-          this.ngOnInit()
+          this.ngOnInit();
         }
       });
     }

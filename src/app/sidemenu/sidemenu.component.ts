@@ -8,11 +8,11 @@
 })
 export class SidemenuComponent implements OnInit {
 
-  constructor(public router: Router,) { }
+  constructor(public router: Router, ) { }
 
   ngOnInit() {
   }
-  logout(){
+  logout() {
     sessionStorage.clear();
     this.router.navigate(['']);
   }

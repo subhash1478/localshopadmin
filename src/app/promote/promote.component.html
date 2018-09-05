@@ -38,6 +38,10 @@
                     <td> 
                       <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
                       <button type="button" class="btn btn-danger btn-xs"  (click)="delete(item)" >delete</button>
+                      <input 
+                       type="file" (change)="addImage($event,item._id)" 
+                      #fileInput>
+                   
                     </td>
                   </tr>
                 </tbody>

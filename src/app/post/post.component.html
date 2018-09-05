@@ -47,7 +47,7 @@
                     <th scope="row">{{i+1}}</th>
                     <td> <a [routerLink]="['/product-category/category', item._id]">{{item.title}}</a> </td>
                     <td>
-                      <dir *ngIf="item.images!=''"> <img [src]="item.images" width="50" height="50" /></dir>
+                      <div *ngIf="item.images!=''"> <img [src]="item.images" width="50" height="50" ></div>
                       
                     </td>
                     <td> {{item.category.title}} </td>

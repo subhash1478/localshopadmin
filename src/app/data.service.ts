@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/observable/of';
-import 'rxjs/Rx';
 import { config } from './config';
 @Injectable()
 export class DataService {
@@ -13,7 +12,7 @@ export class DataService {
     return this._http.post(`${config.API_ENDPOINT}/login`, data);
   }
   addUser(data, action) {
-    if (action == 'add') {
+    if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT }/api/register`, data);
     } else {
       return this._http.post(`${config.API_ENDPOINT}/api/updateuser`, data);
@@ -26,14 +25,14 @@ export class DataService {
     return this._http.get(`${config.API_ENDPOINT}/api/get-vendor`);
   }
   addCategory(data, action) {
-    if (action == 'add') {
+    if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT}/api/add-category`, data);
     } else {
       return this._http.post(`${config.API_ENDPOINT}/api/update-category`, data);
     }
   }
   addpromoter(data, action) {
-    if (action == 'add') {
+    if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT}/api/add-promoter`, data);
     } else {
       return this._http.post(`${config.API_ENDPOINT}/api/update-promoter`, data);
@@ -43,7 +42,7 @@ export class DataService {
     return this._http.get(`${config.API_ENDPOINT }/api/get-promoter`);
   }
   addPost(data, action) {
-    if (action == 'add') {
+    if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT}/api/add-post`, data);
     } else {
       return this._http.post(`${config.API_ENDPOINT }/api/update-post`, data);
@@ -65,59 +64,61 @@ export class DataService {
     return this._http.post(`${config.API_ENDPOINT}/api/delete-post-tag`, data);
   }
   getPlaces(data) {
-    return this._http.get(`${config.GOOGLE_URL}textsearch/json?${config.GOOGLE_API_KEY}&query=${data}`)
+    return this._http.get(`${config.GOOGLE_URL}textsearch/json?${config.GOOGLE_API_KEY}&query=${data}`);
   }
   getPlacesDetails(data) {
-    return this._http.get(`${config.GOOGLE_URL}details/json?placeid=${data}&${config.GOOGLE_API_KEY}`)
+    return this._http.get(`${config.GOOGLE_URL}details/json?placeid=${data}&${config.GOOGLE_API_KEY}`);
   }
-  addpostgoogleapi(data){
+  addpostgoogleapi(data) {
     return this._http.post(`${config.API_ENDPOINT}/api/add-post-googleapi`, data);
   }
-  delete(tbl,data){
-    return this._http.post(`${config.API_ENDPOINT}/api/delete-${tbl}`,data);
+  delete(tbl, data) {
+    return this._http.post(`${config.API_ENDPOINT}/api/delete-${tbl}`, data);
   }
-  editCategory(data){
-    return this._http.post(`${config.API_ENDPOINT}/api/update-category-data`,data);
+  editCategory(data) {
+    return this._http.post(`${config.API_ENDPOINT}/api/update-category-data`, data);
   }
-  getProductCategory (data){
+  getProductCategory (data) {
     return this._http.get(`${config.SAILS_API}/api/get-product-category?shopid=${data.shopid}`);
   }
-  getProduct (data){
+  getProduct (data) {
     return this._http.get(`${config.SAILS_API}/api/get-product?id=${data.id}`);
   }
-  addProduct(data){
-    return this._http.post(`${config.SAILS_API}/api/add-product`,data);
+  addProduct(data) {
+    return this._http.post(`${config.SAILS_API}/api/add-product`, data);
   }
-  addproductcategory(data,type){
-    return this._http.post(`${config.SAILS_API}/api/add-product-category`,data);
+  addproductcategory(data, type) {
+    return this._http.post(`${config.SAILS_API}/api/add-product-category`, data);
   }
-  addDriver(data,type){
-    return this._http.post(`${config.SAILS_API}/api/add-driver`,data);
+  addDriver(data, type) {
+    return this._http.post(`${config.SAILS_API}/api/add-driver`, data);
   }
-  getDriver(){
+  getDriver() {
     return this._http.get(`${config.SAILS_API}/api/get-driver`);
   }
-  getOrder(){
+  getOrder() {
     return this._http.get(`${config.SAILS_API}/api/get-order`);
-  } 
-  getOrderById(id){
+  }
+  getOrderById(id) {
     return this._http.get(`${config.SAILS_API}/api/get-order?id=${id}`);
   }
-  getDriverList(){
+  getDriverList() {
     return this._http.get(`${config.SAILS_API}/api/get-driver`);
   }
-  assignDriver(data){
-    return this._http.post(`${config.SAILS_API}/api/assign-driver`,data);
+  assignDriver(data) {
+    return this._http.post(`${config.SAILS_API}/api/assign-driver`, data);
   }
 
-  getpromotelocation(){
+  getpromotelocation() {
     return this._http.get(`${config.SAILS_API}/api/get-promoter-location`);
 
   }
 
-  addLocation(data){
-    return this._http.post(`${config.SAILS_API}/api/add-promoter-location`,data);
+  addLocation(data) {
+    return this._http.post(`${config.SAILS_API}/api/add-promoter-location`, data);
 
   }
-  
+  addpromoterImage(formdata, id) {
+       return this._http.post(`${config.SAILS_API }/api/add-promoter-image?id=${id}`, formdata);
+    }
 }

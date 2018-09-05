@@ -5,12 +5,12 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
-import { NgxEditorModule } from 'ngx-editor'; 
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   imports: [
-    CommonModule,RouterModule   ],
+    CommonModule, RouterModule   ],
   declarations: [SidemenuComponent],
-  exports:      [ SidemenuComponent ,NgxEditorModule,SelectDropDownModule,FormsModule,MaterialModule]
+  exports:      [ SidemenuComponent , NgxEditorModule, SelectDropDownModule, FormsModule, MaterialModule]
 })
 export class SharedModule { }
