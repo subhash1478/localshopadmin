@@ -75,7 +75,7 @@
                     </div>
                     <label for="exampleInput1">location</label>
                 <select name="location"  [(ngModel)]="cat.location" >
-                      <option *ngFor="let item of promoteLocationList" [value]="item.id">{{item.location}}</option>
+                      <option *ngFor="let item of promoteLocationList" [value]="item.location.id">{{item.location.location}}</option>
                     </select>
  
 
