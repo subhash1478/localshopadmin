@@ -121,4 +121,16 @@ export class DataService {
   addpromoterImage(formdata, id) {
        return this._http.post(`${config.SAILS_API }/api/add-promoter-image?id=${id}`, formdata);
     }
+    addBannerimage (formdata, id) {
+      return this._http.post(`${config.SAILS_API }/api/add-banner-image?id=${id}`, formdata);
+   }
+
+   getBanner(){
+    return this._http.get(`${config.SAILS_API }/api/get-banner`);
+
+   }
+   deleteBanner(data){
+    return this._http.post(`${config.SAILS_API }/api/delete-banner-image`,data);
+
+   }
 }
