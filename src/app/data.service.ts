@@ -133,4 +133,9 @@ export class DataService {
     return this._http.post(`${config.SAILS_API }/api/delete-banner-image`,data);
 
    }
+
+   linkTo(data){
+    return this._http.post(`${config.SAILS_API }/api/link-banner`,data);
+
+   }
 }
