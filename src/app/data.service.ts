@@ -138,4 +138,14 @@ export class DataService {
     return this._http.post(`${config.SAILS_API }/api/link-banner`,data);
 
    }
+
+   getpromoteimage(data){
+    return this._http.get(`${config.SAILS_API }/api/get-promoter-image?id=${data}`);
+
+   }
+
+   deletePromoterImage(data){
+    return this._http.post(`${config.SAILS_API }/api/delete-promoter-image`,data);
+
+   }
 }

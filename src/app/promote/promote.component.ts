@@ -7,13 +7,15 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./promote.component.css']
 })
 export class PromoteComponent implements OnInit {
+  displayedColumns: string[] = ['Slno', 'Title', 'Description', 'Image', 'Subimage', 'showsubimage', 'Edit', 'Delete'];
   selectedFile: any;
   filedata: FormData;
   cat: any = {};
-  crud: string;
+  crud = 'add';
   category: any = [];
   newlocation: any;
   promoteLocationList: any = [];
+  promoteimage: any = [];
   constructor( public _services: DataService, public toastr: ToastrService,  vcr: ViewContainerRef) {
   }
   ngOnInit() {
@@ -27,16 +29,11 @@ export class PromoteComponent implements OnInit {
   //   :::::: A D D   P R O M O T E R : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────
   //
-  addCategory() {
+  addCategory(item) {
+    this.crud = item;
     const uploadData = new FormData();
     uploadData.append('promoterimage', this.selectedFile, this.selectedFile.name );
     uploadData.append('param', JSON.stringify(this.cat) );
-    // this._http.post('http://localhost:3001/api/add-category', uploadData, {
-    //     reportProgress: true,
-    //     observe: 'events'
-    //   })
-    //     .subscribe(event => {
-    //     });
     this._services.addpromoter(uploadData, this.crud).subscribe(( Response: any) => {
       if (Response.success === false) {
         this.toastr.error(Response.message.message, 'Alert!');
@@ -61,6 +58,10 @@ export class PromoteComponent implements OnInit {
     this.cat = item;
   }
   action(type) {
+    this.cat = {};
+    this.crud = type;
+  }
+  cancel(type) {
     this.cat = {};
     this.crud = type;
   }
@@ -89,24 +90,23 @@ export class PromoteComponent implements OnInit {
       this.promoteLocationList = Response.response.data;
     });
   }
-addLocation() {
-  const obj = {
-    location: this.newlocation
-  };
-  this._services.addLocation(obj).subscribe((response) => {
-this.toastr.success();
-this.newlocation = '';
-this.getPromoteLocation();
-  }, (error) => {
-  });
-}
-addImage(event, item) {
-  const uploadData = new FormData();
+  addLocation() {
+    const obj = {
+      location: this.newlocation
+    };
+    this._services.addLocation(obj).subscribe((response) => {
+      this.toastr.success();
+      this.newlocation = '';
+      this.getPromoteLocation();
+    }, (error) => {
+    });
+  }
+  addImage(event, item) {
+    const uploadData = new FormData();
     this.selectedFile = event.target.files;
     console.log(this.selectedFile);
     for (let i = 0; i < this.selectedFile.length; i++) {
       uploadData.append('promoter_image', this.selectedFile[i], this.selectedFile[i]['name']);
- 
     }
     this._services.addpromoterImage(uploadData, item).subscribe((Response: any) => {
       if (Response.success === false) {
@@ -117,5 +117,27 @@ addImage(event, item) {
       }
     }, (Error) => {
     });
-}
+  }
+  getpromoterImage(item) {
+    console.log(item);
+    this._services.getpromoteimage(item._id).subscribe((Response: any) => {
+      this.promoteimage = Response.response.data;
+    });
+  }
+  deletePromoterimage(item, index) {
+    const confirmAlert = confirm('Are you sure want to this item ?');
+    if (confirmAlert === true) {
+      const obj = {
+        id: item.id
+      };
+      this._services.deletePromoterImage(obj).subscribe((response: any) => {
+        if (response.success === false) {
+          this.toastr.error(response.message, 'Alert!');
+        } else {
+          this.toastr.success(response.message, 'Success!');
+          this.promoteimage.splice(index, 1);
+        }
+      });
+    }
+  }
 }
