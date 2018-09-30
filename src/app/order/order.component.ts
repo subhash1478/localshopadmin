@@ -18,8 +18,16 @@ export class OrderComponent implements OnInit {
   }
   ngOnInit() {
     this._services.getOrder().subscribe((Response: any) => {
-      this.orderList = Response.response.data
-      console.log(Response)
+     let result = Response.response.data
+
+      result.sort((a,b):any =>{
+        let date1=new Date(a.order.createdAt);
+        let date2=new Date(b.order.createdAt);
+        return date2.getTime() -  date1.getTime()
+    
+      });
+      this.orderList =result
+      console.log(result)
     })
   }
   addCategory() {

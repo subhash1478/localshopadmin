@@ -47,7 +47,22 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit() {
     this._services.getVendor().subscribe((Response: any) => {
-      const result = Response.data;
+
+      
+
+      let result=Response.data;
+      console.log('====================================');
+      console.log(result);
+      console.log('====================================');
+      result.sort((a,b):any =>{
+        let date1=new Date(a.createdAt);
+        let date2=new Date(b.createdAt);
+        return date2.getTime() -  date1.getTime()
+    
+      });
+
+      
+
       this.vendorList = result;
       console.log(Response);
 

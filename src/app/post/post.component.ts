@@ -54,7 +54,19 @@ export class PostComponent implements OnInit {
       id: this.categorysearch,
     };
     this._services.getPost(obj).subscribe((Response: any) => {
-      this.post = Response.data;
+      let result=Response.data;
+      console.log('====================================');
+      console.log(result);
+      console.log('====================================');
+      result.sort((a,b):any =>{
+        let date1=new Date(a.createdAt);
+        let date2=new Date(b.createdAt);
+        return date2.getTime() -  date1.getTime()
+    
+      });
+      this.post= result
+
+
     });
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
@@ -189,7 +201,16 @@ export class PostComponent implements OnInit {
       id: this.categorysearch,
     };
     this._services.getPost(obj).subscribe((Response: any) => {
-      this.post = Response.data;
-    });
+      let result=Response.data;
+      console.log('====================================');
+      console.log(result);
+      console.log('====================================');
+      result.sort((a,b):any =>{
+        let date1=new Date(a.createdAt);
+        let date2=new Date(b.createdAt);
+        return date2.getTime() -  date1.getTime()
+    
+      });
+      this.post= result    });
   }
 }

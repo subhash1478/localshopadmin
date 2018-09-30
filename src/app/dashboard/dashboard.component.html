@@ -33,6 +33,7 @@
                         <th scope="col">shopname</th>
                         <th scope="col">state</th>
                         <th scope="col">type</th>
+                        <th scope="col">joined</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -46,6 +47,7 @@
                         <td>{{item.shopname}}</td>
                         <td>{{item.state}}</td>
                         <td>{{item.type}}</td>
+                        <td>{{item.createdAt|date}}</td>
                         <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
 
                       </tr>
