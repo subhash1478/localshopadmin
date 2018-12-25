@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlacedataComponent } from './placedata.component';
 
 const routes: Routes = [{
-  path:'',component:PlacedataComponent
+  path: '', component: PlacedataComponent
 }];
 
 @NgModule({

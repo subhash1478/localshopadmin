@@ -6,7 +6,7 @@ import { ProductcategoryComponent } from './productcategory.component';
 import { SharedModule } from '../shared/shared.module';
  @NgModule({
   imports: [
-    CommonModule,SharedModule,
+    CommonModule, SharedModule,
     ProductcategoryRoutingModule
   ],
   declarations: [ProductcategoryComponent]

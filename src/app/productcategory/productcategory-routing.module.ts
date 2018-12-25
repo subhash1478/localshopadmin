@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductcategoryComponent } from './productcategory.component';
 
 const routes: Routes = [{
-  path:'',component:ProductcategoryComponent,
+  path: '', component: ProductcategoryComponent,
   children: [
   {
     path: 'category/:id',

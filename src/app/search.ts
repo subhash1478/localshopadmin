@@ -1,16 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
- 
+
 @Pipe({
   name: 'search',
 })
 export class SearchPipe implements PipeTransform {
- 
+
   transform(items: any[], terms: string): any[] {
     console.log(terms);
 
-    if (!items) return [];
-    if (!terms) return items;
+    if (!items) { return []; }
+    if (!terms) { return items; }
 
     terms = terms.toLowerCase();
 

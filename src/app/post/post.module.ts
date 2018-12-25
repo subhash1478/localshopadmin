@@ -8,10 +8,10 @@ import { SearchPipe } from '../search';
 
 @NgModule({
   imports: [
-    CommonModule,SharedModule, 
+    CommonModule, SharedModule,
     PostRoutingModule
   ],
-  declarations: [PostComponent,SearchPipe],
+  declarations: [PostComponent, SearchPipe],
   exports:      [ SearchPipe ]
 
 })

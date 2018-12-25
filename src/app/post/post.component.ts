@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxEditorModule } from 'ngx-editor';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as _ from 'underscore';
+import { log } from 'util';
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -40,9 +41,23 @@ export class PostComponent implements OnInit {
   }, {
     date: 'Sunday', starttime: '', endtime: ''
   }];
+  region: any = [];
   constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef) {
   }
+
+getRegion() {
+  this._services.getRegion().subscribe((response: any) => {
+    console.log('====================================');
+    console.log(response);
+
+    this.region = response.data;
+     console.log('====================================');
+  });
+}
+
+
   ngOnInit() {
+
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
         if (params != null) {
@@ -54,28 +69,37 @@ export class PostComponent implements OnInit {
       id: this.categorysearch,
     };
     this._services.getPost(obj).subscribe((Response: any) => {
-      let result=Response.data;
+      const result = Response.data;
       console.log('====================================');
       console.log(result);
       console.log('====================================');
-      result.sort((a,b):any =>{
-        let date1=new Date(a.createdAt);
-        let date2=new Date(b.createdAt);
-        return date2.getTime() -  date1.getTime()
-    
+      result.sort((a, b): any => {
+        const date1 = new Date(a.createdAt);
+        const date2 = new Date(b.createdAt);
+        return date2.getTime() -  date1.getTime();
+
       });
-      this.post= result
+      console.log('====================================');
+      console.log(result);
+      console.log('====================================');
+     this.post = result;
 
 
     });
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
+
+      console.log('====================================');
+      console.log( Response.data);
+      console.log('====================================');
     });
     this._services.getVendor().subscribe((Response: any) => {
       this.user = Response.data;
     });
   }
   addPost() {
+
+
     this.cat.timing = this.timing;
     this._services.addPost(this.cat, this.crud).subscribe((Response: any) => {
       if (Response.success === false) {
@@ -97,6 +121,7 @@ export class PostComponent implements OnInit {
     }
   }
   edit(item) {
+    this.getRegion();
     this.crud = 'edit';
     this.cat = item;
     this.cat.category = item.category._id;
@@ -112,6 +137,7 @@ export class PostComponent implements OnInit {
     });
   }
   action(type) {
+    this.getRegion();
     this.cat = {};
     this.crud = type;
   }
@@ -201,16 +227,16 @@ export class PostComponent implements OnInit {
       id: this.categorysearch,
     };
     this._services.getPost(obj).subscribe((Response: any) => {
-      let result=Response.data;
+      const result = Response.data;
       console.log('====================================');
       console.log(result);
       console.log('====================================');
-      result.sort((a,b):any =>{
-        let date1=new Date(a.createdAt);
-        let date2=new Date(b.createdAt);
-        return date2.getTime() -  date1.getTime()
-    
+      result.sort((a, b): any => {
+        const date1 = new Date(a.createdAt);
+        const date2 = new Date(b.createdAt);
+        return date2.getTime() -  date1.getTime();
+
       });
-      this.post= result    });
+      this.post = result;    });
   }
 }

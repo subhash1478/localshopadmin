@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DriverComponent } from './driver.component';
 
 const routes: Routes = [{
-  path:'',component:DriverComponent
+  path: '', component: DriverComponent
 }];
 
 @NgModule({

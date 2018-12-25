@@ -11,6 +11,11 @@ export class DataService {
   doLogin(data) {
     return this._http.post(`${config.API_ENDPOINT}/login`, data);
   }
+
+  AgentLogin(data) {
+    return this._http.post(`${config.API_ENDPOINT}/api/login`, data);
+
+  }
   addUser(data, action) {
     if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT }/api/register`, data);
@@ -125,27 +130,44 @@ export class DataService {
       return this._http.post(`${config.SAILS_API }/api/add-banner-image?id=${id}`, formdata);
    }
 
-   getBanner(){
+   getBanner() {
     return this._http.get(`${config.SAILS_API }/api/get-banner`);
 
    }
-   deleteBanner(data){
-    return this._http.post(`${config.SAILS_API }/api/delete-banner-image`,data);
+   deleteBanner(data) {
+    return this._http.post(`${config.SAILS_API }/api/delete-banner-image`, data);
 
    }
 
-   linkTo(data){
-    return this._http.post(`${config.SAILS_API }/api/link-banner`,data);
+   linkTo(data) {
+    return this._http.post(`${config.SAILS_API }/api/link-banner`, data);
 
    }
 
-   getpromoteimage(data){
+   getpromoteimage(data) {
     return this._http.get(`${config.SAILS_API }/api/get-promoter-image?id=${data}`);
 
    }
 
-   deletePromoterImage(data){
-    return this._http.post(`${config.SAILS_API }/api/delete-promoter-image`,data);
+   deletePromoterImage(data) {
+    return this._http.post(`${config.SAILS_API }/api/delete-promoter-image`, data);
 
    }
+
+   addProductImage(formdata, id) {
+
+    return this._http.post(`${config.SAILS_API }/api/upload-product-image?id=${id}`, formdata);
+
+
+   }
+   getChatHistory(obj) {
+const token = localStorage.getItem('token');
+    return this._http.get(`${config.API_ENDPOINT}/api/chatHistory?token=${token}&remoteUserId=${obj.remoteuserid}&page=${obj.page}`);
+
+
+  }
+
+  getRegion() {
+    return this._http.get(`${config.API_ENDPOINT}/api/get-region`);
+  }
 }

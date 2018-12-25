@@ -4,15 +4,15 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
-import { HttpModule } from '@angular/http';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { NgChatModule } from 'ng-chat';
 
-const config: SocketIoConfig = { url: 'http://139.59.12.86:3001/', options: {} };
+
+
+
+
 @NgModule({
   imports: [
-    CommonModule,SharedModule, SocketIoModule.forRoot(config) , NgChatModule,
-    DashboardRoutingModule,HttpModule
+    CommonModule, SharedModule,
+    DashboardRoutingModule,
   ],
   declarations: [DashboardComponent]
 })

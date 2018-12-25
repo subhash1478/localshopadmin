@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PlacedataComponent } from './placedata.component';
 @NgModule({
   imports: [
-    CommonModule,SharedModule,
+    CommonModule, SharedModule,
     PlacedataRoutingModule
   ],
   declarations: [PlacedataComponent]

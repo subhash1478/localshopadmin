@@ -5,7 +5,8 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <h1 style="text-align:center;">
       page-not-found!<hr/>
-      <a [routerLink]="['/login']">Home</a>
+
+
 
     </h1>
   `,

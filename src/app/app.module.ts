@@ -10,7 +10,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthGuardService } from './auth-guard.service';
 import { MaterialModule } from './material.module';
 import { SharedModule } from './shared/shared.module';
-import { NgChatModule } from 'ng-chat';
 
 
 
@@ -19,7 +18,7 @@ import { NgChatModule } from 'ng-chat';
     AppComponent,
     PageNotFoundComponent,
   ],
-  imports: [MaterialModule, SharedModule,   NgChatModule,
+  imports: [MaterialModule, SharedModule,
 
     BrowserModule, AppRouting, HttpClientModule, BrowserAnimationsModule, ToastrModule.forRoot()
   ],

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PromoteComponent } from './promote.component';
 
 const routes: Routes = [{
-  path:'',component:PromoteComponent
+  path: '', component: PromoteComponent
 }];
 
 @NgModule({

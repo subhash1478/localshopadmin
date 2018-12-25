@@ -24,18 +24,18 @@ export class BannerComponent implements OnInit  {
      console.log('message');
   }
   ngOnInit() {
-    this.getBanner() 
-    this.getPost() 
-  
+    this.getBanner();
+    this.getPost();
+
   }
-  getBanner(){
+  getBanner() {
     this._services.getBanner().subscribe((Response: any) => {
       this.category = Response.response.data;
       console.log(Response);
     });
   }
 
-  getPost(){
+  getPost() {
     const obj = {
       id: undefined,
     };
@@ -93,18 +93,18 @@ export class BannerComponent implements OnInit  {
     }
   }
 
-  showoption(objdata,item) {
+  showoption(objdata, item) {
 console.log( this.myControl);
 
     const obj = {
       linkto: objdata._id,
-      id:item.id
+      id: item.id
     };
     this._services.linkTo(obj).subscribe((Response) => {
 
 console.log(Response);
 
-this.getBanner() 
+this.getBanner();
 
     });
 
