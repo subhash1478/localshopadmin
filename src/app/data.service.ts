@@ -29,6 +29,11 @@ export class DataService {
   getVendor() {
     return this._http.get(`${config.API_ENDPOINT}/api/get-vendor`);
   }
+
+  updateVendorType(data) {
+    return this._http.post(`${config.API_ENDPOINT}/api/update-vendor-type`, data);
+  }
+
   addCategory(data, action) {
     if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT}/api/add-category`, data);

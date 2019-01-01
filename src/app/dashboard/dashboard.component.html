@@ -20,123 +20,144 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')"  data-target="#myModal">Add</button>
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">address</th>
-                        <th scope="col">city</th>
-                        <th scope="col">email</th>
-                        <th scope="col">phone</th>
-                        <th scope="col">shopname</th>
-                        <th scope="col">state</th>
-                        <th scope="col">type</th>
-                        <th scope="col">joined</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of vendorList;let i = index">
-                        <th scope="row">{{i+1}}</th>
-                        <td>{{item.firstname}} {{item.lastname}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.email}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.shopname}}</td>
-                        <td>{{item.state}}</td>
-                        <td>{{item.type}}</td>
-                        <td>{{item.createdAt|date}}</td>
-                        <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
+              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add</button>
+              <div class="col-xs-2" style="float:right;">
+                <input class="form-control" [(ngModel)]="searchTerm" type="text" placeholder="Search">
+              </div>
 
-                      </tr>
 
-                    </tbody>
-                  </table>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">address</th>
+                    <th scope="col">city</th>
+                    <th scope="col">email</th>
+                    <th scope="col">phone</th>
+                    <th scope="col">shopname</th>
+                    <th scope="col">state</th>
+                    <th scope="col">type</th>
+                    <th scope="col">joined</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of filteredVendors;let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{item.firstname}} {{item.lastname}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.city}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.phone}}</td>
+                    <td>{{item.shopname}}</td>
+                    <td>{{item.state}}</td>
+                    <td>
+                      <select [ngClass]="item.type === 'customer' ? 'btn-success' : 'btn-primary'" [id]="'item'+item._id"
+                        (change)="change_type($event.target.value,item.email,item._id)">
+                        <option value="customer" [selected]="item.type === 'customer'">
+
+                        <option value="customer" [selected]="item.type === 'customer'">
+                          Customer
+                        </option>
+
+                        <option value="vendor" [selected]="item.type === 'vendor'">
+                          Vendor
+                        </option>
+
+                      </select>
+                    </td>
+                    <td>{{item.createdAt|date}}</td>
+                    <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)"
+                        data-target="#myModal">Edit</button>
+
+                  </tr>
+
+                </tbody>
+              </table>
             </div>
-          </div>  </div>
+          </div>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+</div>
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+  <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">{{crud|uppercase}} User</h4>
-        </div>
-        <div class="modal-body">
-            <div class="box box-primary">
-                <div class="box-body">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{crud|uppercase}} User</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box box-primary">
+          <div class="box-body">
 
-                  <div class="form-group">
-                    <label for="">Category</label>
-                    <select name="category" class="form-control" [(ngModel)]="user.category">
-                      <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="">Shop name</label>
-                    <input name="shopname" type="text" class="form-control" [(ngModel)]="user.shopname"   >
-                  </div>
-                  <div class="form-group">
-                    <label for="">Firstname</label>
-                    <input name="firstname" type="text" class="form-control" [(ngModel)]="user.firstname"   >
-                  </div>    <div class="form-group">
-                    <label for="">Lastname</label>
-                    <input type="text" class="form-control" [(ngModel)]="user.lastname"   >
-                  </div>
-                  <div class="form-group">
-                    <label for="">Email address</label>
-                    <input name="email" type="email" class="form-control"  [(ngModel)]="user.email" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">Password</label>
-                    <input type="password" name="password" class="form-control"  placeholder="" [(ngModel)]="user.password"   >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">address</label>
-                    <input type="text" name="address" class="form-control"  placeholder="" [(ngModel)]="user.address"  >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">city</label>
-                    <input type="text" name="city" class="form-control"  placeholder="" [(ngModel)]="user.city"  >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">state</label>
-                    <input type="text" name="state" class="form-control"  placeholder="" [(ngModel)]="user.state"  >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">country</label>
-                    <input type="text" name="country" class="form-control"  placeholder="" [(ngModel)]="user.country"  >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">phone</label>
-                    <input type="text" name="phone" class="form-control"  placeholder="" [(ngModel)]="user.phone"  >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">zip</label>
-                    <input type="text" name="zip" class="form-control"  placeholder="" [(ngModel)]="user.zip"  >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInput1">about</label>
-                    <input type="text" name="about" class="form-control"  placeholder="" [(ngModel)]="user.about"  >
-                  </div>
-                 </div>
+            <div class="form-group">
+              <label for="">Category</label>
+              <select name="category" class="form-control" [(ngModel)]="user.category">
+                <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="">Shop name</label>
+              <input name="shopname" type="text" class="form-control" [(ngModel)]="user.shopname">
+            </div>
+            <div class="form-group">
+              <label for="">Firstname</label>
+              <input name="firstname" type="text" class="form-control" [(ngModel)]="user.firstname">
+            </div>
+            <div class="form-group">
+              <label for="">Lastname</label>
+              <input type="text" class="form-control" [(ngModel)]="user.lastname">
+            </div>
+            <div class="form-group">
+              <label for="">Email address</label>
+              <input name="email" type="email" class="form-control" [(ngModel)]="user.email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">Password</label>
+              <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="user.password">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">address</label>
+              <input type="text" name="address" class="form-control" placeholder="" [(ngModel)]="user.address">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">city</label>
+              <input type="text" name="city" class="form-control" placeholder="" [(ngModel)]="user.city">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">state</label>
+              <input type="text" name="state" class="form-control" placeholder="" [(ngModel)]="user.state">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">country</label>
+              <input type="text" name="country" class="form-control" placeholder="" [(ngModel)]="user.country">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">phone</label>
+              <input type="text" name="phone" class="form-control" placeholder="" [(ngModel)]="user.phone">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">zip</label>
+              <input type="text" name="zip" class="form-control" placeholder="" [(ngModel)]="user.zip">
+            </div>
+            <div class="form-group">
+              <label for="exampleInput1">about</label>
+              <input type="text" name="about" class="form-control" placeholder="" [(ngModel)]="user.about">
+            </div>
+          </div>
 
 
-              </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" (click)="addUser()" >Save</button>
         </div>
       </div>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="addUser()">Save</button>
+      </div>
     </div>
+
   </div>
-  
+</div>
