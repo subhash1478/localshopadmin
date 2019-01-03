@@ -61,6 +61,7 @@ export class DataService {
   getPost(data) {
     return this._http.get(`${config.API_ENDPOINT}/api/get-post?catid=${data.id}`);
   }
+  
   updatePostImage(formdata) {
     return this._http.post(`${config.API_ENDPOINT }/api/update-postimage`, formdata);
   }

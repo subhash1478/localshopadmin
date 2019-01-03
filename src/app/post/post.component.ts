@@ -12,7 +12,10 @@ import { log } from 'util';
 })
 export class PostComponent implements OnInit {
   public options = {type : 'address', componentRestrictions: { country: 'IN' }};
-  categorysearch: any;
+  categorysearch: any = "";
+  private _regionSearch : any = "";
+  postFilterByRegion: any = [];
+  regionFlag = 0;
   searchpost: any;
   selectedFile: Array<File>;
   selectedtags: any = [];
@@ -45,10 +48,36 @@ export class PostComponent implements OnInit {
   constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef) {
   }
 
+  get regionSearch(){
+    return this._regionSearch;
+  }
+
+  set regionSearch(value){
+    this._regionSearch = value;
+
+    this.postFilterByRegion = this.filterByRegion(value);
+    
+    
+  }
+
+  filterByRegion(searchString){
+    return this.post.filter((result : any) => {
+      
+      
+      if (result.region) {
+          
+        return result.region.toLowerCase().includes(searchString.toLowerCase())
+          
+      }
+      
+      
+    })
+  }
+
 getRegion() {
   this._services.getRegion().subscribe((response: any) => {
     console.log('====================================');
-    console.log(response);
+    console.log("Reg  --"+JSON.stringify(response.data));
 
     this.region = response.data;
      console.log('====================================');
@@ -65,9 +94,13 @@ getRegion() {
         }
       });
     }
-    const obj = {
-      id: this.categorysearch,
-    };
+    const obj: object = {};
+
+    if(this.categorysearch){
+      obj["id"] = this.categorysearch;
+    }
+    console.log("ob     "+JSON.stringify(obj));
+    
     this._services.getPost(obj).subscribe((Response: any) => {
       const result = Response.data;
       console.log('====================================');
@@ -83,6 +116,7 @@ getRegion() {
       console.log(result);
       console.log('====================================');
      this.post = result;
+     this.postFilterByRegion = result;
 
 
     });
@@ -96,6 +130,8 @@ getRegion() {
     this._services.getVendor().subscribe((Response: any) => {
       this.user = Response.data;
     });
+
+    this.getRegion();
   }
   addPost() {
 
@@ -219,13 +255,23 @@ getRegion() {
     }
   }
   onChange(event) {
+    this.regionFlag = 1;
+    if(this.regionFlag == 1){
+      this._regionSearch = "";
+    }
+    
     if (this.categorysearch === '') {
       this.ngOnInit();
       return false;
     }
-    const obj = {
-      id: this.categorysearch,
-    };
+    
+    const obj: object = {};
+
+    if(this.categorysearch){
+      obj["id"] = this.categorysearch;
+    }
+    console.log(obj);
+    
     this._services.getPost(obj).subscribe((Response: any) => {
       const result = Response.data;
       console.log('====================================');
@@ -237,6 +283,10 @@ getRegion() {
         return date2.getTime() -  date1.getTime();
 
       });
-      this.post = result;    });
+      this.post = result;  
+      this.postFilterByRegion = result;
+      
+      this.regionFlag = 0;
+    });
   }
 }
