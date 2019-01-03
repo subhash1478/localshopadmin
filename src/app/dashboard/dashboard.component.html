@@ -22,7 +22,7 @@
             <div class="col-md-12">
               <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add</button>
               <div class="col-xs-2" style="float:right;">
-                <input class="form-control" [(ngModel)]="searchTerm" type="text" placeholder="Search">
+                <input class="form-control" [(ngModel)]="searchTerm" type="search" placeholder="Search">
               </div>
 
 
@@ -52,19 +52,21 @@
                     <td>{{item.shopname}}</td>
                     <td>{{item.state}}</td>
                     <td>
-                      <select [ngClass]="item.type === 'customer' ? 'btn-success' : 'btn-primary'" [id]="'item'+item._id"
-                        (change)="change_type($event.target.value,item.email,item._id)">
-                        <option value="customer" [selected]="item.type === 'customer'">
 
-                        <option value="customer" [selected]="item.type === 'customer'">
+                      <select [(ngModel)]="item.type" [ngClass]="item.type === 'customer' ? 'btn-success' : 'btn-primary'"
+                        (change)="change_type($event.target.value,item.email,item._id)">
+
+                        <option value="customer">
                           Customer
                         </option>
 
-                        <option value="vendor" [selected]="item.type === 'vendor'">
+                        <option value="vendor">
                           Vendor
                         </option>
 
                       </select>
+
+
                     </td>
                     <td>{{item.createdAt|date}}</td>
                     <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)"

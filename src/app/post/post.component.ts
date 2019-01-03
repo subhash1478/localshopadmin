@@ -12,7 +12,10 @@ import { log } from 'util';
 })
 export class PostComponent implements OnInit {
   public options = {type : 'address', componentRestrictions: { country: 'IN' }};
-  categorysearch: any;
+  categorysearch: any = '';
+  private _regionSearch: any = '';
+  postFilterByRegion: any = [];
+  regionFlag = 0;
   searchpost: any;
   selectedFile: Array<File>;
   selectedtags: any = [];
@@ -44,20 +47,26 @@ export class PostComponent implements OnInit {
   region: any = [];
   constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef) {
   }
-
+  get regionSearch() {
+    return this._regionSearch;
+  }
+  set regionSearch(value) {
+    this._regionSearch = value;
+    this.postFilterByRegion = this.filterByRegion(value);
+  }
+  filterByRegion(searchString) {
+    return this.post.filter((result: any) => {
+      if (result.region) {
+        return result.region.toLowerCase().includes(searchString.toLowerCase());
+      }
+    });
+  }
 getRegion() {
   this._services.getRegion().subscribe((response: any) => {
-    console.log('====================================');
-    console.log(response);
-
     this.region = response.data;
-     console.log('====================================');
   });
 }
-
-
   ngOnInit() {
-
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
         if (params != null) {
@@ -65,41 +74,29 @@ getRegion() {
         }
       });
     }
-    const obj = {
-      id: this.categorysearch,
-    };
+    const obj: object = {};
+    if (this.categorysearch) {
+      obj['id'] = this.categorysearch;
+    }
     this._services.getPost(obj).subscribe((Response: any) => {
       const result = Response.data;
-      console.log('====================================');
-      console.log(result);
-      console.log('====================================');
       result.sort((a, b): any => {
         const date1 = new Date(a.createdAt);
         const date2 = new Date(b.createdAt);
         return date2.getTime() -  date1.getTime();
-
       });
-      console.log('====================================');
-      console.log(result);
-      console.log('====================================');
      this.post = result;
-
-
+     this.postFilterByRegion = result;
     });
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
-
-      console.log('====================================');
-      console.log( Response.data);
-      console.log('====================================');
     });
     this._services.getVendor().subscribe((Response: any) => {
       this.user = Response.data;
     });
+    this.getRegion();
   }
   addPost() {
-
-
     this.cat.timing = this.timing;
     this._services.addPost(this.cat, this.crud).subscribe((Response: any) => {
       if (Response.success === false) {
@@ -219,24 +216,28 @@ getRegion() {
     }
   }
   onChange(event) {
+    this.regionFlag = 1;
+    if (this.regionFlag === 1) {
+      this._regionSearch = '';
+    }
     if (this.categorysearch === '') {
       this.ngOnInit();
       return false;
     }
-    const obj = {
-      id: this.categorysearch,
-    };
+    const obj: object = {};
+    if (this.categorysearch) {
+      obj['id'] = this.categorysearch;
+    }
     this._services.getPost(obj).subscribe((Response: any) => {
       const result = Response.data;
-      console.log('====================================');
-      console.log(result);
-      console.log('====================================');
       result.sort((a, b): any => {
         const date1 = new Date(a.createdAt);
         const date2 = new Date(b.createdAt);
         return date2.getTime() -  date1.getTime();
-
       });
-      this.post = result;    });
+      this.post = result;
+      this.postFilterByRegion = result;
+      this.regionFlag = 0;
+    });
   }
 }

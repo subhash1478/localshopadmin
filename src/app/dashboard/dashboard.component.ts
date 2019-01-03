@@ -32,31 +32,22 @@ export class DashboardComponent implements OnInit {
 
   filterVendors(searchString){
     return this.vendorList.filter((vendor : any) => {
-      
-      
-      if (
-        (vendor.firstname !== null && typeof vendor.firstname !== 'undefined') 
-        && (vendor.lastname !== null && typeof vendor.lastname !== 'undefined')
-        && (vendor.phone !== null && typeof vendor.phone !== 'undefined') 
-        && (vendor.email !== null && typeof vendor.email !== 'undefined')
-      ) {
-        
-        if(
-          vendor.firstname.toLowerCase().includes(searchString.toLowerCase())
-          ||
-          vendor.lastname.toLowerCase().includes(searchString.toLowerCase()) 
-          || 
-          vendor.phone.toLowerCase().includes(searchString.toLowerCase())
-          ||
-          vendor.email.toLowerCase().includes(searchString.toLowerCase())
-        ){
-
-          return vendor;
+      if (vendor.firstname && vendor.lastname && vendor.phone && vendor.email) {
+          
+          if(
+            vendor.firstname.toLowerCase().includes(searchString.toLowerCase())
+            ||
+            vendor.lastname.toLowerCase().includes(searchString.toLowerCase()) 
+            || 
+            vendor.phone.toLowerCase().includes(searchString.toLowerCase())
+            ||
+            vendor.email.toLowerCase().includes(searchString.toLowerCase())
+          ){
+  
+            return vendor;
+          }
+          
         }
-        
-      }
-
-      //return blank_array;
       
       
     })
@@ -101,17 +92,6 @@ export class DashboardComponent implements OnInit {
         this.toastr.error(Response.message, 'Alert!');
       } else {
 
-        if(type === 'customer'){
-          this.user.item = 'customer';
-          document.getElementById("item"+_id).classList.remove("btn-primary")
-          document.getElementById("item"+_id).classList.add("btn-success")
-
-        }
-        else{
-          document.getElementById("item"+_id).classList.remove("btn-success")
-          document.getElementById("item"+_id).classList.add("btn-primary")
-        }
-        
         this.user = {};
         this.toastr.success(Response.message, 'Success!');
        
