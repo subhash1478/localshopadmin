@@ -23,34 +23,25 @@
               <div class="topnav">
                 <a class="btn-primary" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add <span
                     class="glyphicon glyphicon-plus"></span></a>
-
                 <div class="row">
-
                   <div class="form-group" style="float:left;">
                     <div class="col-xs-6">
-
                       <select class="form-control" name="category" [(ngModel)]="categorysearch" (ngModelChange)="onChange($event)">
                         <option value="">Select Category</option>
                         <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
                       </select>
-
                     </div>
                     <div class="col-xs-6">
                       <select class="form-control" name="category" [(ngModel)]="regionSearch">
                         <option value="">Select Region</option>
-
                         <option *ngFor="let item of region" [value]="item._id">{{item.title}}</option>
                       </select>
                     </div>
                   </div>
-
                   <div class="search-container">
                     <input type="text" placeholder="Search.." name="search" [(ngModel)]="searchpost">
                   </div>
-
                 </div>
-
-
               </div>
               <table class="table">
                 <thead>
@@ -69,11 +60,10 @@
                     <td> <a [routerLink]="['/product-category/category', item._id]">{{item.title}}</a> </td>
                     <td>
                       <div *ngIf="item.images!=''"> <img [src]="item.images" width="50" height="50"></div>
-
                     </td>
                     <td> </td>
                     <td>{{item.viwed}} </td>
-                    <td>{{item.createdAt|date}}</td>
+                    <td>{{item.createdAt|date:'short'}}</td>
                     <td>
                       <button type="button" class="btn btn-info btn-xs" [routerLink]="['id',item._id]">View</button>
                       <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)"
@@ -95,7 +85,6 @@
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -104,9 +93,7 @@
       <div class="modal-body">
         <div class="box box-primary">
           <div class="box-body">
-
             <div class="form-group">
-
               <div class="form-group">
                 <label for="">Region</label>
                 <select name="region" class="form-control" [(ngModel)]="cat.region">
@@ -126,51 +113,64 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="exampleInput1">Title</label>
+                <label>Title</label>
                 <input type="text" name="title" class="form-control" placeholder="" [(ngModel)]="cat.title">
               </div>
               <div class="form-group">
-                <label for="exampleInput1">address</label>
+                <label>Address</label>
                 <input type="text" name="title" class="form-control" placeholder="" [(ngModel)]="cat.address">
               </div>
               <!--  -->
               <div class="form-group" *ngFor="let item of timing; let i=index">
                 <div class="row">
-                  <div class="col-md-6">
-                    <label for="exampleInput1">{{item.date}}</label>
+                  <div class="col-md-2">
+                    <label>{{item.date}}</label>
                   </div>
-                  <div class="col-md-6">
-                    <input type="time" [id]="i" [(ngModel)]="item.starttime">
-                    <input type="time" [(ngModel)]="item.endtime">
-                    <button class="btn btn-default btn-xs" type="button">
-                      <span class="icon-repeat">R</span></button>
+                  <div class="col-md-10">
+                    <div class="col-sm-2">
+                    </div>
+                    <label for="fullDayId_{{i}}">Full Day</label>
+                    <input id="fullDayId_{{i}}" type="checkbox" [(ngModel)]="item.fullDay" (click)="fullDayTime(item)">
+                    <input type="time" [(ngModel)]="item.starttime" (blur)="checkFullDay(item)">
+                    <input type="time" [(ngModel)]="item.endtime" (blur)="checkFullDay(item)">
+                    <button class="btn btn-default btn-xs" *ngIf="i==0 && item.starttime[0] && item.endtime[0]" type="button"
+                      (click)="setAllTime()">
+                      <span class="icon-repeat">Set All</span>
+                    </button>
+                    <button class="btn btn-primary btn-xs" *ngIf="i==0 && item.starttime && item.endtime" type="button"
+                      (click)="resetAllTime()">
+                      <span class="icon-repeat">Reset All</span>
+                    </button>
+                    <button class="btn btn-danger btn-xs" *ngIf="i !== 0 && item.starttime" type="button" (click)="deleteTime(item)">
+                      <span class="icon-repeat">X</span>
+                    </button>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="exampleInput1">phone</label>
+                <label>Phone</label>
                 <input type="tel" name="phone" class="form-control" placeholder="" [(ngModel)]="cat.phone">
               </div>
               <div class="form-group">
-                <label for="exampleInput1">rating</label>
+                <label>Rating</label>
                 <input type="number" name="rating" class="form-control" placeholder="" [(ngModel)]="cat.rating">
               </div>
               <div class="form-group">
-                <label for="exampleInput1">website</label>
+                <label>Website link</label>
                 <input type="url" name="website" class="form-control" placeholder="" [(ngModel)]="cat.website">
               </div>
               <div class="form-group">
-                <label for="exampleInput1">Description</label>
+                <label>Description</label>
                 <app-ngx-editor [spellcheck]="true" [(ngModel)]="cat.description"></app-ngx-editor>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" (click)="addPost()">Add</button>
+          <button type="button" class="btn btn-default" (click)="addPost()">Save</button>
         </div>
         <div class="form-group" *ngIf="this.crud=='edit'">
-          <label for="exampleInput1">Image</label>
+          <label>Image</label>
           <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
           <button (click)="fileInput.click()">Select File</button>
         </div>
@@ -194,19 +194,19 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="exampleInput1">Add tag</label>
+          <label>Add tag</label>
           <input type="text" name="tag" class="form-control" placeholder="" [(ngModel)]="tagval.title">
           <button (click)="addTag()">add</button>
         </div>
         <h4>
-          <p>selected tag</p>
+          <p>Selected tag</p>
         </h4>
         <ul class="tags">
           <li *ngFor="let item of selectedtags;let i = index">
             <a (click)="deleteTag(item,i)" class="tag selected">{{item}}</a>
         </ul>
         <h4>
-          <p>suggestion tag</p>
+          <p>Tag exists</p>
         </h4>
         <ul class="tags">
           <li *ngFor="let item of tag;let i = index">

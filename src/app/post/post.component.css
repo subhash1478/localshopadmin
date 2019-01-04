@@ -1,46 +1,46 @@
-
 .tags {
-    list-style: none;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-  }
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
 
-  .tags li {
-    float: left;
-    list-style: none;
-  }
+.tags li {
+  float: left;
+  list-style: none;
+}
 
-  .tag {
-    background: #eee;
-    border-radius: 3px 0 0 3px;
-    color: #999;
-    display: inline-block;
-    height: 26px;
-    line-height: 26px;
-    padding: 0 20px 0 23px;
-    position: relative;
-    margin: 0 10px 10px 0;
-    text-decoration: none;
-    -webkit-transition: color 0.2s;
-  }
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}
 
 
-  .tag:hover {
-    background-color: crimson;
-    color: white;
-    cursor: pointer;
-  }
-  .selected{
-    background-color: crimson;
-    color: white;
-  }
+.tag:hover {
+  background-color: crimson;
+  color: white;
+  cursor: pointer;
+}
 
-  .tag:hover::after {
-     border-left-color: crimson;
-  }
- 
- 
+.selected {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+  border-left-color: crimson;
+}
+
+
 
 .topnav {
   overflow: hidden;
@@ -94,11 +94,19 @@
   background: #ccc;
 }
 
+label,
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
   .topnav .search-container {
     float: none;
   }
-  .topnav a, .topnav input[type=text], .topnav .search-container button {
+
+  .topnav a,
+  .topnav input[type=text],
+  .topnav .search-container button {
     float: none;
     display: block;
     text-align: left;
@@ -106,7 +114,10 @@
     margin: 0;
     padding: 14px;
   }
+
   .topnav input[type=text] {
-    border: 1px solid #ccc;  
+    border: 1px solid #ccc;
   }
+
+
 }
