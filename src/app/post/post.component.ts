@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewContainerRef   } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgxEditorModule } from 'ngx-editor';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'underscore';
-import { log } from 'util';
-@Component({
+ @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
@@ -29,22 +27,22 @@ export class PostComponent implements OnInit {
   tagval: any = {};
   private sub: any;
   id: any;
-  timing:  any = [{
-    date: 'Monday', starttime: '', endtime: ''
-  }, {
-    date: 'Tuesday', starttime: '', endtime: ''
-  }, {
-    date: 'Wednesday', starttime: '', endtime: ''
-  }, {
-    date: 'Thursday', starttime: '', endtime: ''
-  }, {
-    date: 'Friday', starttime: '', endtime: ''
-  }, {
-    date: 'Saturday', starttime: '', endtime: '',
-  }, {
-    date: 'Sunday', starttime: '', endtime: ''
-  }];
   region: any = [];
+  timing:  any = [{
+    date: 'Monday', fullDay: false, starttime: '', endtime: ''
+  }, {
+    date: 'Tuesday', fullDay: false, starttime: '', endtime: ''
+  }, {
+    date: 'Wednesday', fullDay: false, starttime: '', endtime: ''
+  }, {
+    date: 'Thursday', fullDay: false, starttime: '', endtime: ''
+  }, {
+    date: 'Friday', fullDay: false, starttime: '', endtime: ''
+  }, {
+    date: 'Saturday', fullDay: false, starttime: '', endtime: '',
+  }, {
+    date: 'Sunday', fullDay: false, starttime: '', endtime: ''
+  }];
   constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef) {
   }
   get regionSearch() {
@@ -54,18 +52,6 @@ export class PostComponent implements OnInit {
     this._regionSearch = value;
     this.postFilterByRegion = this.filterByRegion(value);
   }
-  filterByRegion(searchString) {
-    return this.post.filter((result: any) => {
-      if (result.region) {
-        return result.region.toLowerCase().includes(searchString.toLowerCase());
-      }
-    });
-  }
-getRegion() {
-  this._services.getRegion().subscribe((response: any) => {
-    this.region = response.data;
-  });
-}
   ngOnInit() {
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
@@ -96,7 +82,49 @@ getRegion() {
     });
     this.getRegion();
   }
-  addPost() {
+  setAllTime() {
+    this.timing.forEach(element => {
+      element.starttime = this.timing[0].starttime;
+      element.endtime = this.timing[0].endtime;
+      if (this.timing[0].starttime === '00:01' && this.timing[0].endtime === '23:59') {
+        element.fullDay = true;
+      }
+    });
+  }
+  resetAllTime() {
+    this.timing.forEach(element => {
+      element.starttime = '';
+      element.endtime = '';
+      element.fullDay = false;
+    });
+  }
+  deleteTime(item) {
+    item.starttime = '';
+    item.endtime = '';
+    this.checkFullDay(item);
+  }
+  fullDayTime(item) {
+    item.starttime = '00:01';
+    item.endtime = '23:59';
+  }
+  checkFullDay(item) {
+    if (item.starttime !== '00:01' || item.endtime !== '23:59') {
+      item.fullDay = false;
+    }
+  }
+  filterByRegion(searchString) {
+    return this.post.filter((result: any) => {
+      if (result.region) {
+        return result.region.toLowerCase().includes(searchString.toLowerCase());
+      }
+    });
+  }
+getRegion() {
+  this._services.getRegion().subscribe((response: any) => {
+    this.region = response.data;
+  });
+}
+addPost() {
     this.cat.timing = this.timing;
     this._services.addPost(this.cat, this.crud).subscribe((Response: any) => {
       if (Response.success === false) {
