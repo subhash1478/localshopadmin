@@ -63,7 +63,7 @@
   color: black;
 }
 
-.topnav a.active {
+.topnav a {
   background-color: #2196F3;
   color: white;
 }
@@ -97,7 +97,9 @@
 label,
 input[type="checkbox"] {
   cursor: pointer;
+  height: 15px;
 }
+
 
 @media screen and (max-width: 600px) {
   .topnav .search-container {

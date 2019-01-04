@@ -26,12 +26,14 @@
                 <div class="row">
                   <div class="form-group" style="float:left;">
                     <div class="col-xs-6">
+                      <label>Select Category</label>
                       <select class="form-control" name="category" [(ngModel)]="categorysearch" (ngModelChange)="onChange($event)">
                         <option value="">Select Category</option>
                         <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
                       </select>
                     </div>
                     <div class="col-xs-6">
+                      <label>Select Region</label>
                       <select class="form-control" name="category" [(ngModel)]="regionSearch">
                         <option value="">Select Region</option>
                         <option *ngFor="let item of region" [value]="item._id">{{item.title}}</option>
@@ -39,11 +41,11 @@
                     </div>
                   </div>
                   <div class="search-container">
-                    <input type="text" placeholder="Search.." name="search" [(ngModel)]="searchpost">
+                    <input type="text" placeholder="Search shop..." name="search" [(ngModel)]="searchpost">
                   </div>
                 </div>
               </div>
-              <table class="table">
+              <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -127,23 +129,31 @@
                     <label>{{item.date}}</label>
                   </div>
                   <div class="col-md-10">
-                    <div class="col-sm-2">
+                    <div class="col-xs-2">
+                      <label for="fullDayId_{{i}}"><i class="fa fa-clock-o fa-2x" title="Full Day" aria-hidden="true"></i></label>&nbsp;
+                      <input id="fullDayId_{{i}}" type="checkbox" [(ngModel)]="item.fullDay" (click)="fullDayTime(item)">
                     </div>
-                    <label for="fullDayId_{{i}}">Full Day</label>
-                    <input id="fullDayId_{{i}}" type="checkbox" [(ngModel)]="item.fullDay" (click)="fullDayTime(item)">
-                    <input type="time" [(ngModel)]="item.starttime" (blur)="checkFullDay(item)">
-                    <input type="time" [(ngModel)]="item.endtime" (blur)="checkFullDay(item)">
-                    <button class="btn btn-default btn-xs" *ngIf="i==0 && item.starttime[0] && item.endtime[0]" type="button"
-                      (click)="setAllTime()">
-                      <span class="icon-repeat">Set All</span>
-                    </button>
-                    <button class="btn btn-primary btn-xs" *ngIf="i==0 && item.starttime && item.endtime" type="button"
-                      (click)="resetAllTime()">
-                      <span class="icon-repeat">Reset All</span>
-                    </button>
-                    <button class="btn btn-danger btn-xs" *ngIf="i !== 0 && item.starttime" type="button" (click)="deleteTime(item)">
-                      <span class="icon-repeat">X</span>
-                    </button>
+                    <div class="col-xs-3">
+                      <input type="time" [disabled]="item.fullDay" [(ngModel)]="item.starttime" (blur)="checkFullDay(item)">
+                    </div>
+                    <div class="col-xs-3">
+                      <input type="time" [disabled]="item.fullDay" [(ngModel)]="item.endtime" (blur)="checkFullDay(item)">
+                    </div>
+                    <div class="col-xs-2" *ngIf="i==0 && item.starttime[0] && item.endtime[0]">
+                      <button class="btn btn-success btn-xs" type="button" (click)="setAllTime()">
+                        <span class="icon-repeat">Set All</span>
+                      </button>
+                    </div>
+                    <div class="col-xs-2" *ngIf="i==0 && item.starttime[0] && item.endtime[0]">
+                      <button class="btn btn-primary btn-xs" type="button" (click)="resetAllTime()">
+                        <span class="icon-repeat"><i class="fa fa-refresh" title="Reset All" aria-hidden="true"></i></span>
+                      </button>
+                    </div>
+                    <div class="col-xs-3" *ngIf="i !== 0 && item.starttime">
+                      <button class="btn btn-danger btn-xs" type="button" (click)="deleteTime(item)">
+                        <span class="icon-repeat">X</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
