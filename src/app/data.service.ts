@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {  HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/retry';
@@ -11,14 +11,12 @@ export class DataService {
   doLogin(data) {
     return this._http.post(`${config.API_ENDPOINT}/login`, data);
   }
-
   AgentLogin(data) {
     return this._http.post(`${config.API_ENDPOINT}/api/login`, data);
-
   }
   addUser(data, action) {
     if (action === 'add') {
-      return this._http.post(`${config.API_ENDPOINT }/api/register`, data);
+      return this._http.post(`${config.API_ENDPOINT}/api/register`, data);
     } else {
       return this._http.post(`${config.API_ENDPOINT}/api/updateuser`, data);
     }
@@ -29,11 +27,9 @@ export class DataService {
   getVendor() {
     return this._http.get(`${config.API_ENDPOINT}/api/get-vendor`);
   }
-
   updateVendorType(data) {
     return this._http.post(`${config.API_ENDPOINT}/api/update-vendor-type`, data);
   }
-
   addCategory(data, action) {
     if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT}/api/add-category`, data);
@@ -49,21 +45,20 @@ export class DataService {
     }
   }
   getpromoter() {
-    return this._http.get(`${config.API_ENDPOINT }/api/get-promoter`);
+    return this._http.get(`${config.API_ENDPOINT}/api/get-promoter`);
   }
   addPost(data, action) {
     if (action === 'add') {
       return this._http.post(`${config.API_ENDPOINT}/api/add-post`, data);
     } else {
-      return this._http.post(`${config.API_ENDPOINT }/api/update-post`, data);
+      return this._http.post(`${config.API_ENDPOINT}/api/update-post`, data);
     }
   }
   getPost(data) {
     return this._http.get(`${config.API_ENDPOINT}/api/get-post?catid=${data.id}`);
   }
-  
   updatePostImage(formdata) {
-    return this._http.post(`${config.API_ENDPOINT }/api/update-postimage`, formdata);
+    return this._http.post(`${config.API_ENDPOINT}/api/update-postimage`, formdata);
   }
   getTags(id) {
     return this._http.get(`${config.API_ENDPOINT}/api/get-tag?id=${id}`);
@@ -89,10 +84,10 @@ export class DataService {
   editCategory(data) {
     return this._http.post(`${config.API_ENDPOINT}/api/update-category-data`, data);
   }
-  getProductCategory (data) {
+  getProductCategory(data) {
     return this._http.get(`${config.SAILS_API}/api/get-product-category?shopid=${data.shopid}`);
   }
-  getProduct (data) {
+  getProduct(data) {
     return this._http.get(`${config.SAILS_API}/api/get-product?id=${data.id}`);
   }
   addProduct(data) {
@@ -119,60 +114,40 @@ export class DataService {
   assignDriver(data) {
     return this._http.post(`${config.SAILS_API}/api/assign-driver`, data);
   }
-
   getpromotelocation() {
     return this._http.get(`${config.SAILS_API}/api/get-promoter-location`);
-
   }
-
   addLocation(data) {
     return this._http.post(`${config.SAILS_API}/api/add-promoter-location`, data);
-
   }
   addpromoterImage(formdata, id) {
-       return this._http.post(`${config.SAILS_API }/api/add-promoter-image?id=${id}`, formdata);
-    }
-    addBannerimage (formdata, id) {
-      return this._http.post(`${config.SAILS_API }/api/add-banner-image?id=${id}`, formdata);
-   }
-
-   getBanner() {
-    return this._http.get(`${config.SAILS_API }/api/get-banner`);
-
-   }
-   deleteBanner(data) {
-    return this._http.post(`${config.SAILS_API }/api/delete-banner-image`, data);
-
-   }
-
-   linkTo(data) {
-    return this._http.post(`${config.SAILS_API }/api/link-banner`, data);
-
-   }
-
-   getpromoteimage(data) {
-    return this._http.get(`${config.SAILS_API }/api/get-promoter-image?id=${data}`);
-
-   }
-
-   deletePromoterImage(data) {
-    return this._http.post(`${config.SAILS_API }/api/delete-promoter-image`, data);
-
-   }
-
-   addProductImage(formdata, id) {
-
-    return this._http.post(`${config.SAILS_API }/api/upload-product-image?id=${id}`, formdata);
-
-
-   }
-   getChatHistory(obj) {
-const token = localStorage.getItem('token');
-    return this._http.get(`${config.API_ENDPOINT}/api/chatHistory?token=${token}&remoteUserId=${obj.remoteuserid}&page=${obj.page}`);
-
-
+    return this._http.post(`${config.SAILS_API}/api/add-promoter-image?id=${id}`, formdata);
   }
-
+  addBannerimage(formdata, id) {
+    return this._http.post(`${config.SAILS_API}/api/add-banner-image?id=${id}`, formdata);
+  }
+  getBanner() {
+    return this._http.get(`${config.SAILS_API}/api/get-banner`);
+  }
+  deleteBanner(data) {
+    return this._http.post(`${config.SAILS_API}/api/delete-banner-image`, data);
+  }
+  linkTo(data) {
+    return this._http.post(`${config.SAILS_API}/api/link-banner`, data);
+  }
+  getpromoteimage(data) {
+    return this._http.get(`${config.SAILS_API}/api/get-promoter-image?id=${data}`);
+  }
+  deletePromoterImage(data) {
+    return this._http.post(`${config.SAILS_API}/api/delete-promoter-image`, data);
+  }
+  addProductImage(formdata, id) {
+    return this._http.post(`${config.SAILS_API}/api/upload-product-image?id=${id}`, formdata);
+  }
+  getChatHistory(obj) {
+    const token = localStorage.getItem('token');
+    return this._http.get(`${config.API_ENDPOINT}/api/chatHistory?token=${token}&remoteUserId=${obj.remoteuserid}&page=${obj.page}`);
+  }
   getRegion() {
     return this._http.get(`${config.API_ENDPOINT}/api/get-region`);
   }

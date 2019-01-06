@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewContainerRef   } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'underscore';
- @Component({
+@Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  public options = {type : 'address', componentRestrictions: { country: 'IN' }};
+  public options = { type: 'address', componentRestrictions: { country: 'IN' } };
   categorysearch: any = '';
   private _regionSearch: any = '';
   postFilterByRegion: any = [];
@@ -23,12 +23,14 @@ export class PostComponent implements OnInit {
   category: any = [];
   user: any = [];
   post = [];
-  tag: any = [];
+  blockSpace: RegExp = /[^\s]/; 
+    tag: any = [];
   tagval: any = {};
   private sub: any;
   id: any;
   region: any = [];
-  timing:  any = [{
+  defaultFullday: any = { startTime: '00:00', EndTime: '11:59' };
+  timing: any = [{
     date: 'Monday', fullDay: false, starttime: '', endtime: ''
   }, {
     date: 'Tuesday', fullDay: false, starttime: '', endtime: ''
@@ -43,9 +45,11 @@ export class PostComponent implements OnInit {
   }, {
     date: 'Sunday', fullDay: false, starttime: '', endtime: ''
   }];
+  cols: { field: string; header: string; }[];
   constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef) {
   }
   get regionSearch() {
+
     return this._regionSearch;
   }
   set regionSearch(value) {
@@ -53,10 +57,16 @@ export class PostComponent implements OnInit {
     this.postFilterByRegion = this.filterByRegion(value);
   }
   ngOnInit() {
+    this.cols = [
+      { field: 'title', header: 'title' },
+      { field: 'phone', header: 'phone' },
+      { field: 'address', header: 'address' },
+      { field: 'category', header: 'category' }]
+
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
         if (params != null) {
-          this.categorysearch =  params.id;
+          this.categorysearch = params.id;
         }
       });
     }
@@ -69,10 +79,10 @@ export class PostComponent implements OnInit {
       result.sort((a, b): any => {
         const date1 = new Date(a.createdAt);
         const date2 = new Date(b.createdAt);
-        return date2.getTime() -  date1.getTime();
+        return date2.getTime() - date1.getTime();
       });
-     this.post = result;
-     this.postFilterByRegion = result;
+      this.post = result;
+      this.postFilterByRegion = result;
     });
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
@@ -112,19 +122,20 @@ export class PostComponent implements OnInit {
       item.fullDay = false;
     }
   }
-  filterByRegion(searchString) {
+  filterByRegion(item) {
+    const searchString = item._id;
     return this.post.filter((result: any) => {
       if (result.region) {
         return result.region.toLowerCase().includes(searchString.toLowerCase());
       }
     });
   }
-getRegion() {
-  this._services.getRegion().subscribe((response: any) => {
-    this.region = response.data;
-  });
-}
-addPost() {
+  getRegion() {
+    this._services.getRegion().subscribe((response: any) => {
+      this.region = response.data;
+    });
+  }
+  addPost() {
     this.cat.timing = this.timing;
     this._services.addPost(this.cat, this.crud).subscribe((Response: any) => {
       if (Response.success === false) {
@@ -193,6 +204,7 @@ addPost() {
       id: this.cat._id
     };
     this._services.addTag(obj).subscribe((Response: any) => {
+
       this.selectedtags.push(this.tagval.title);
       if (Response.success === false) {
         this.toastr.error(Response.message.message, 'Alert!');
@@ -207,13 +219,22 @@ addPost() {
       tagname: item,
       id: this.cat._id
     };
-    this._services.addTag(obj).subscribe((Response: any) => {
-      if (Response.success === false) {
-        this.toastr.error(Response.message.message, 'Alert!');
-      } else {
-        this.toastr.success(Response.message, 'Success!');
-      }
-    });
+    if (this.selectedtags.indexOf(item) === -1) {
+      this.selectedtags.push(item);
+      this._services.addTag(obj).subscribe((Response: any) => {
+        if (Response.success === false) {
+          this.toastr.error(Response.message.message, 'Alert!');
+        } else {
+
+          this.toastr.success(Response.message, 'Success!');
+
+        }
+      });
+    } else {
+      this.toastr.error('exists', 'Alert!');
+
+    }
+
   }
   deleteTag(item, index) {
     const obj = {
@@ -237,6 +258,7 @@ addPost() {
         if (response.success === false) {
           this.toastr.error(response.message, 'Alert!');
         } else {
+
           this.toastr.success(response.message, 'Success!');
           this.ngOnInit();
         }
@@ -254,14 +276,14 @@ addPost() {
     }
     const obj: object = {};
     if (this.categorysearch) {
-      obj['id'] = this.categorysearch;
+      obj['id'] = event.value._id;
     }
     this._services.getPost(obj).subscribe((Response: any) => {
       const result = Response.data;
       result.sort((a, b): any => {
         const date1 = new Date(a.createdAt);
         const date2 = new Date(b.createdAt);
-        return date2.getTime() -  date1.getTime();
+        return date2.getTime() - date1.getTime();
       });
       this.post = result;
       this.postFilterByRegion = result;

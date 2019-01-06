@@ -22,7 +22,6 @@ export class DriverComponent implements OnInit {
     });
   }
   addCategory() {
-
     if ( this.crud === 'edit' ) {
       this._services.editCategory(this.cat).subscribe((Response: any) => {
         if (Response.success === false) {
@@ -34,7 +33,6 @@ export class DriverComponent implements OnInit {
         }
       });
     } else {
-
       this._services.addDriver(this.cat, this.crud).subscribe((Response: any) => {
         if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
@@ -45,9 +43,6 @@ export class DriverComponent implements OnInit {
         }
       });
     }
-
-
-
   }
   fileChange(event) {
     const fileList: FileList = event.target.files;
@@ -62,7 +57,6 @@ export class DriverComponent implements OnInit {
     console.log(item);
     this.crud = 'edit';
     this.cat = item;
-
   }
   action(type) {
     this.cat = {};

@@ -20,58 +20,36 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-
               <form role="form" class="col-md-9 go-right">
-
                 <div class="form-group">
                   <input id="name" name="name" [(ngModel)]="q" type="text" class="form-control" required>
-
                   <button (click)="search()" type="button" name="button">Search</button>
                 </div>
-
               </form>
-
               <div class="col-md-9">
                 <div class="card pb-5">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                 <div class="pb-3"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4" *ngFor="let item of placelist;let i = index">
-                                 <div class="card text-center">
-                                  
-                                  <a  data-toggle="modal" (click)="action(item)"  data-target="#myModal"
-                                  >
- save                                
-                                </a>
-
-                                  
-                                    <div class="card-body" >
-                                      <h5>{{item.name}}</h5> 
-                                      <p>{{item.formatted_address}}</p> 
-                                    </div>
-                                 </div>
-                            </div>
-                            
-                        </div>
-                        
-                        
-                        
-                      
-                       
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="pb-3"></div>
+                      </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-4" *ngFor="let item of placelist;let i = index">
+                        <div class="card text-center">
+                          <a data-toggle="modal" (click)="action(item)" data-target="#myModal">
+                            save
+                          </a>
+                          <div class="card-body">
+                            <h5>{{item.name}}</h5>
+                            <p>{{item.formatted_address}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
-
-
-
-
-
-
-
+              </div>
             </div>
           </div>
         </div>
@@ -91,23 +69,23 @@
         <div class="box box-primary">
           <div class="box-body">
             <div class="form-group">
-                <div class="form-group">
-                    <label for="">Region</label>
-                    <select name="region" class="form-control" [(ngModel)]="cat.region">
-                      <option *ngFor="let item of region" [value]="item._id">{{item.title}}</option>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <label for="">Region</label>
+                <select name="region" class="form-control" [(ngModel)]="cat.region">
+                  <option *ngFor="let item of region" [value]="item._id">{{item.title}}</option>
+                </select>
+              </div>
               <div class="form-group">
                 <label for="">Category</label>
                 <select name="category" class="form-control" [(ngModel)]="cat.category">
-                    <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
-                  </select>
+                  <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="">User</label>
                 <select name="user" class="form-control" [(ngModel)]="cat.userid">
-                    <option *ngFor="let item of user" [value]="item._id">{{item.firstname}} {{item.lastname}}</option>
-                  </select>
+                  <option *ngFor="let item of user" [value]="item._id">{{item.firstname}} {{item.lastname}}</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="exampleInput1">Title</label>
@@ -125,46 +103,32 @@
                 <label for="exampleInput1">address</label>
                 <input type="text" name="phone" class="form-control" placeholder="" [(ngModel)]="cat.address">
               </div>
-               
-              
-
             </div>
           </div>
         </div>
-        <div class="form-group"  >
+        <div class="form-group">
           <div class="col-md-9">
             <div class="card pb-5">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                             <div class="pb-3"></div>
-                        </div>
-                    </div>
- 
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let item of photoslistimage;let i = index">
-                             <div class="card text-center">
-                 <img (click)="getimage(item)" width="100" [src]="item" alt="">
-
-                              
-                   
-                             </div>
-                        </div>
-                        
-                    </div>
-                    
-                     
-                    
-                  
-                   
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="pb-3"></div>
+                  </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-4" *ngFor="let item of photoslistimage;let i = index">
+                    <div class="card text-center">
+                      <img (click)="getimage(item)" width="100" [src]="item" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" (click)="addPost()">Add</button>
         </div>
-        
       </div>
     </div>
   </div>

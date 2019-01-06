@@ -13,10 +13,15 @@ export class CategoryComponent implements OnInit {
   cat: any = {};
   crud: string;
   category: any = [];
+  cols: { field: string; header: string; }[];
   constructor(public _services: DataService, public toastr: ToastrService, private _http: HttpClient, vcr: ViewContainerRef) {
      console.log('message');
   }
   ngOnInit() {
+    this.cols = [
+      { field: 'title', header: 'title' },
+      { field: 'image', header: 'image' },
+    ];
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
       console.log(Response);

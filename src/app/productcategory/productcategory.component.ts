@@ -2,7 +2,6 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-productcategory',
   templateUrl: './productcategory.component.html',
@@ -21,30 +20,27 @@ export class ProductcategoryComponent implements OnInit {
     search: true,
   };
   post: any = [];
-
+  cols: { field: string; header: string; }[];
   constructor(public _services: DataService,
     public toastr: ToastrService,
     private activeRoute: ActivatedRoute,
     vcr: ViewContainerRef, private router: Router) {
     console.log('message');
-
-
     this.categoryid = this.activeRoute.snapshot.params.id;
-
-
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
-
         console.log(params);
         if (params != null) {
           this.categoryid = params.id;
-
         }
-
       });
     }
   }
   ngOnInit() {
+    this.cols = [
+      { field: 'title', header: 'title' },
+      { field: 'shop', header: 'shop name' },
+    ];
     const data = {
       id: this.categoryid,
     };
@@ -52,7 +48,6 @@ export class ProductcategoryComponent implements OnInit {
       this.post = Response.data;
       console.log(Response);
     });
-
     const obj = {
       shopid: this.categoryid
     };
@@ -62,7 +57,6 @@ export class ProductcategoryComponent implements OnInit {
     });
   }
   addCategory() {
-
     this.cat.shopid = this.categoryid;
     if (this.crud === 'edit') {
       this._services.editCategory(this.cat).subscribe((Response: any) => {
@@ -85,9 +79,6 @@ export class ProductcategoryComponent implements OnInit {
         }
       });
     }
-
-
-
   }
   fileChange(event) {
     const fileList: FileList = event.target.files;
@@ -131,10 +122,8 @@ export class ProductcategoryComponent implements OnInit {
       });
     }
   }
-
   changeValue($event: any) {
     console.log($event.value[0]._id);
-
     this.router.navigate([`/product-category/category/${$event.value[0]._id}`]);
   }
 }

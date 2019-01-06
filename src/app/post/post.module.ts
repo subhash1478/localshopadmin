@@ -4,8 +4,10 @@ import { PostRoutingModule } from './post-routing.module';
 import { PostComponent } from './post.component';
 import { SharedModule } from '../shared/shared.module';
 import { SearchPipe } from '../search';
+import {EditorModule} from 'primeng/editor';
+
 @NgModule({
-  imports: [
+  imports: [EditorModule,
     CommonModule, SharedModule,
     PostRoutingModule
   ],

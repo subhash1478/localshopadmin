@@ -20,31 +20,38 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')"  data-target="#myModal">Add</button>
-              <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="post" (change)="changeValue($event)"></ngx-select-dropdown>
+                <button pTooltip="Add Product category" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>
+                <p-dropdown [options]="post" [(ngModel)]="singleSelect"  (change)="changeValue($event)" optionLabel="title" [filter]="true"  ></p-dropdown>
 
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Shop name</th>
-                     <!-- <th scope="col">Action</th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of ProductCategory;let i = index">
-                    <th scope="row">{{i+1}}</th>
-                    <td> <a [routerLink]="['/product', item.id]">{{item.title}}</a> </td>
-                    <td> <a [routerLink]="['/product', item.id]">{{item.shopid.title}}</a> </td>
+           
 
-                     <!-- <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
-                      <td> <button type="button" class="btn btn-danger btn-xs" 
-                         (click)="delete(item)"  >Delete</button>
-                      </td> -->
+
+                <p-table [columns]="cols" #dt [value]="ProductCategory" [tableStyle]="{'table-layout':'auto'}"
+                [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
+                    <ng-template pTemplate="caption">
+  
+                  <div style="text-align: right">
+  
+                        <input type="search" pTooltip="search" tooltipPosition ="top" pInputText size="50" placeholder="Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                          style="width:auto">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                      </div>
+                    </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Title</th>
+                       <th>Shop name</th>
+                     </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td> <a [routerLink]="['/product', item.id]">{{item.title}}</a> </td>
+                        <td> <a [routerLink]="['/product', item.id]">{{item.shopid.title}}</a> </td>
+    
+                       
                     </tr>
-                  </tbody>
-                </table>
+                  </ng-template>
+                </p-table>
               </div>
             </div>  </div>
           </div>

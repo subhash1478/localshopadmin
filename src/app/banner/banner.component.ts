@@ -26,7 +26,6 @@ export class BannerComponent implements OnInit  {
   ngOnInit() {
     this.getBanner();
     this.getPost();
-
   }
   getBanner() {
     this._services.getBanner().subscribe((Response: any) => {
@@ -34,7 +33,6 @@ export class BannerComponent implements OnInit  {
       console.log(Response);
     });
   }
-
   getPost() {
     const obj = {
       id: undefined,
@@ -44,21 +42,15 @@ export class BannerComponent implements OnInit  {
       this.filteredOptionsData = Response.data;
     });
   }
-
-
   private _filter(value: any) {
-
     if (value === undefined) {
       return false;
     }
-
     const filterValue = value.toLowerCase();
     this.filteredOptionsData = this.filteredOptions.filter((options) => {
       return options.title.toLowerCase().indexOf(filterValue) > -1;
     });
   }
-
-
   addImage(event, item) {
     console.log(event, item);
     const uploadData = new FormData();
@@ -92,21 +84,15 @@ export class BannerComponent implements OnInit  {
       });
     }
   }
-
   showoption(objdata, item) {
 console.log( this.myControl);
-
     const obj = {
       linkto: objdata._id,
       id: item.id
     };
     this._services.linkTo(obj).subscribe((Response) => {
-
 console.log(Response);
-
 this.getBanner();
-
     });
-
   }
 }

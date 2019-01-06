@@ -17,7 +17,7 @@ const appRoutes: Routes = [
 },
 {    path: 'placeapi', loadChildren: './placedata/placedata.module#PlacedataModule' ,    },
 {    path: 'banner', loadChildren: './banner/banner.module#BannerModule' ,    },
-{    path: 'chat', loadChildren: './chat/chat.module#ChatModule' ,    },
+// {    path: 'chat', loadChildren: './chat/chat.module#ChatModule' ,    },
 {
   path: '**',
   component: PageNotFoundComponent

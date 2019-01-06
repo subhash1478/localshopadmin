@@ -20,30 +20,46 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add</button>
-              <div class="col-xs-2" style="float:right;">
-                <input class="form-control" [(ngModel)]="searchTerm" type="search" placeholder="Search">
-              </div>
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <button pTooltip="Add new User" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>     
+                        </div>
+                    </div>
+                        
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <button pButton type="button" label="Search"></button>
+                            <input  pTooltip="Search User"  type="text" [(ngModel)]="searchTerm"  pInputText placeholder="Keyword">         
+                        </div>
+                    </div>
+                  </div>
+ 
+             
+         
 
+                
+              <p-table [columns]="cols" #dt [value]="filteredVendors" [tableStyle]="{'table-layout':'auto'}"
+              [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
 
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">address</th>
-                    <th scope="col">city</th>
-                    <th scope="col">email</th>
-                    <th scope="col">phone</th>
-                    <th scope="col">shopname</th>
-                    <th scope="col">state</th>
-                    <th scope="col">type</th>
-                    <th scope="col">joined</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of filteredVendors;let i = index">
-                    <th scope="row">{{i+1}}</th>
+     
+              <ng-template pTemplate="header">
+                <tr>
+                    <th >Username</th>
+                    <th >address</th>
+                    <th >city</th>
+                    <th >email</th>
+                    <th >phone</th>
+                    <th >shopname</th>
+                    <th >state</th>
+                    <th >type</th>
+                    <th >joined</th>
+                    <th >Action</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item>
+                <tr>
+                
                     <td>{{item.firstname}} {{item.lastname}}</td>
                     <td>{{item.address}}</td>
                     <td>{{item.city}}</td>
@@ -52,30 +68,36 @@
                     <td>{{item.shopname}}</td>
                     <td>{{item.state}}</td>
                     <td>
-
-                      <select [(ngModel)]="item.type" [ngClass]="item.type === 'customer' ? 'btn-success' : 'btn-primary'"
+                      <select pTooltip="Change user role {{item.type === 'customer' ? 'Vendor' : 'customer'}}" tooltipPosition="top"   [(ngModel)]="item.type" [ngClass]="item.type === 'customer' ? 'btn-success' : 'btn-primary'"
                         (change)="change_type($event.target.value,item.email,item._id)">
-
                         <option value="customer">
                           Customer
                         </option>
-
                         <option value="vendor">
                           Vendor
                         </option>
-
                       </select>
-
-
                     </td>
                     <td>{{item.createdAt|date}}</td>
-                    <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)"
-                        data-target="#myModal">Edit</button>
+                    <td> 
+                        <button pTooltip="Edit" pButton type="button" data-toggle="modal" (click)="edit(item)"
+                        data-target="#myModal" icon="pi pi-pencil" iconPos="left"  class="ui-button-info"></button>
 
-                  </tr>
-
-                </tbody>
-              </table>
+                      </td> 
+                      </tr>
+              </ng-template>
+              <ng-template pTemplate="summary">
+                <div style="text-align: left">
+                  <code>
+                  <div *ngFor="let item of userda| keyvalue">
+                    {{ item.key }} - {{ item.value }}
+                  </div>
+                </code>
+                </div>
+              </ng-template>
+            </p-table>
+            
+            
             </div>
           </div>
         </div>
@@ -86,7 +108,6 @@
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -96,7 +117,6 @@
       <div class="modal-body">
         <div class="box box-primary">
           <div class="box-body">
-
             <div class="form-group">
               <label for="">Category</label>
               <select name="category" class="form-control" [(ngModel)]="user.category">
@@ -152,14 +172,11 @@
               <input type="text" name="about" class="form-control" placeholder="" [(ngModel)]="user.about">
             </div>
           </div>
-
-
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="addUser()">Save</button>
       </div>
     </div>
-
   </div>
 </div>

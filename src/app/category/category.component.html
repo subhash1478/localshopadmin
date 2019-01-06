@@ -20,29 +20,43 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add</button>
-              <table class="table">
-                <thead>
+              <button pTooltip="Add new category" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>
+ 
+              <p-table [columns]="cols" #dt [value]="category" [tableStyle]="{'table-layout':'auto'}"
+              [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
+                  <ng-template pTemplate="caption">
+
+                <div style="text-align: right">
+
+                      <input type="search" pTooltip="search" tooltipPosition ="top" pInputText size="50" placeholder="Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        style="width:auto">
+                      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    </div>
+                  </ng-template>
+                <ng-template pTemplate="header">
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">image</th>
-                    <th scope="col">Action</th>
+                    <th>Title</th>
+                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of category;let i = index">
-                    <th scope="row">{{i+1}}</th>
-                    <td> <a [routerLink]="['/post/category', item._id]">{{item.title}}</a> </td>
-                    <td><img [src]="item.image" width="70" /></td>
-                    <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)"
-                        data-target="#myModal">Edit</button>
-                    <td> <button type="button" class="btn btn-danger btn-xs" (click)="delete(item)">Delete</button>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                  <tr>
+                    <td><img [src]="item.image" width="25" />{{item.title}}</td>
+                     <td>
+                        <button pTooltip="Edit" pButton type="button" data-toggle="modal" (click)="edit(item)"
+                        data-target="#myModal" icon="pi pi-pencil" iconPos="left"  class="ui-button-info"></button>
+
+                        
+
+                        <td> <button pTooltip="delete" pButton type="button" icon="pi pi-trash" iconPos="left" (click)="delete(item)"  class="ui-button-danger"> </button>
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                </ng-template>
+              </p-table>
+          
             </div>
+
           </div>
         </div>
       </div>

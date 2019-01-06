@@ -1,16 +1,5 @@
 <app-sidemenu></app-sidemenu>
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1>
-      Data Tables
-      <small>advanced tables</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Tables</a></li>
-      <li class="active">Data tables</li>
-    </ol>
-  </section>
   <section class="content">
     <div class="row">
       <div class="col-md-12">
@@ -20,45 +9,33 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div class="topnav">
-                <a class="btn-primary" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add <span
-                    class="glyphicon glyphicon-plus"></span></a>
-                <div class="row">
-                  <div class="form-group" style="float:left;">
-                    <div class="col-xs-6">
-                      <label>Select Category</label>
-                      <select class="form-control" name="category" [(ngModel)]="categorysearch" (ngModelChange)="onChange($event)">
-                        <option value="">Select Category</option>
-                        <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
-                      </select>
+              <button pTooltip="Add new post" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>
+              <p-table [columns]="cols" #dt [value]="postFilterByRegion" [tableStyle]="{'table-layout':'auto'}"
+                [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
+                <ng-template pTemplate="caption">
+                    <div class="ui-g">
+                        <div class="ui-g-4"> <p-dropdown [options]="region" [(ngModel)]="regionSearch" placeholder="Select a Region" optionLabel="title"  ></p-dropdown></div>
+                        <div class="ui-g-4"> <p-dropdown (onChange)="onChange($event)"  [filter]="true" [options]="category" [(ngModel)]="categorysearch" placeholder="Select a category" optionLabel="title" [showClear]="true"></p-dropdown></div>
+                        <div class="ui-g-4"> 
+                            <div class="ui-inputgroup">
+                                <input type="search" pTooltip="search" tooltipPosition ="top" pInputText placeholder="Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                style="width:auto"> <button pButton type="button" icon="fa fa-search" class="ui-button-warn"></button>      
+                            </div>
+                           </div>
                     </div>
-                    <div class="col-xs-6">
-                      <label>Select Region</label>
-                      <select class="form-control" name="category" [(ngModel)]="regionSearch">
-                        <option value="">Select Region</option>
-                        <option *ngFor="let item of region" [value]="item._id">{{item.title}}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="search-container">
-                    <input type="text" placeholder="Search shop..." name="search" [(ngModel)]="searchpost">
-                  </div>
-                </div>
-              </div>
-              <table class="table table-hover table-bordered table-striped table-condensed">
-                <thead>
+                </ng-template>
+                <ng-template pTemplate="header">
                   <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Title</th>
-                    <th scope="col">image</th>
-                    <th scope="col">category</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Viwed</th>
                     <th scope="col">createdAt</th>
+                    <th scope="col">action</th>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of postFilterByRegion|search:searchpost;let i = index">
-                    <th scope="row">{{i+1}}</th>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                  <tr>
                     <td> <a [routerLink]="['/product-category/category', item._id]">{{item.title}}</a> </td>
                     <td>
                       <div *ngIf="item.images!=''"> <img [src]="item.images" width="50" height="50"></div>
@@ -75,8 +52,17 @@
                       <button type="button" class="btn btn-danger btn-xs" (click)="delete(item)">delete</button>
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                  <div style="text-align: left">
+                    <code>
+                    <div *ngFor="let item of userda| keyvalue">
+                      {{ item.key }} - {{ item.value }}
+                    </div>
+                  </code>
+                  </div>
+                </ng-template>
+              </p-table>
             </div>
           </div>
         </div>
@@ -159,19 +145,21 @@
               </div>
               <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" name="phone" class="form-control" placeholder="" [(ngModel)]="cat.phone">
+           
+                <input type="tel"  name="phone" class="form-control" pInputText pKeyFilter="int" placeholder="phone" [(ngModel)]="cat.phone">
               </div>
               <div class="form-group">
                 <label>Rating</label>
-                <input type="number" name="rating" class="form-control" placeholder="" [(ngModel)]="cat.rating">
+                <input type="number" name="rating"  pInputText pKeyFilter="int"  class="form-control" placeholder="" [(ngModel)]="cat.rating">
               </div>
               <div class="form-group">
                 <label>Website link</label>
-                <input type="url" name="website" class="form-control" placeholder="" [(ngModel)]="cat.website">
+                <input type="url" name="website" pInputText [pKeyFilter]="blockSpace" class="form-control" placeholder="" [(ngModel)]="cat.website">
               </div>
               <div class="form-group">
                 <label>Description</label>
-                <app-ngx-editor [spellcheck]="true" [(ngModel)]="cat.description"></app-ngx-editor>
+                 <p-editor [(ngModel)]="text"  [(ngModel)]="cat.description" [style]="{'height':'320px'}"></p-editor>
+
               </div>
             </div>
           </div>

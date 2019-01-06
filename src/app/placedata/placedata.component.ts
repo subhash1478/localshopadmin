@@ -28,7 +28,6 @@ export class PlacedataComponent implements OnInit {
   id: any;
   region: any = [];
   constructor(public toastr: ToastrService, public _services: DataService, vcr: ViewContainerRef) {
-
   }
   ngOnInit() {
     const obj = {
@@ -54,11 +53,8 @@ export class PlacedataComponent implements OnInit {
       console.log('response', response);
       if (response.status === 'OK') {
         this.placelist = response.results;
-
-
       } else {
         this.toastr.error(response.error_message, 'Alert!');
-
       }
     }, (error) => {
       console.log('error', error);
@@ -70,18 +66,13 @@ export class PlacedataComponent implements OnInit {
     for (let index = 0; index < this.photoslist.length; index++) {
       const refence = this.photoslist[index].photo_reference;
       img.push(config.GOOGLE_URL + 'photo?maxwidth=400&photoreference=' + refence + '&' + config.GOOGLE_API_KEY);
-
     }
     this.photoslistimage = img;
     console.log(img);
-
-
   }
   action(item) {
     this.crud = 'add';
     console.log(item.place_id);
-
-
     this._services.getPlacesDetails(item.place_id).subscribe((Response: any) => {
       console.log(Response);
       if (Response.status === 'OK') {
@@ -93,42 +84,31 @@ export class PlacedataComponent implements OnInit {
         this.cat.rating = res.rating;
         this.cat.location = res.geometry.location;
         this.cat.website = res.website;
-
         this.photoslist = res.photos;
         this.photos();
       } else {
         this.toastr.error(Response.error_message, 'Alert!');
-
       }
-
     });
-
   }
-
   getRegion() {
     this._services.getRegion().subscribe((response: any) => {
       console.log('====================================');
       console.log(response);
-
       this.region = response.data;
        console.log('====================================');
     });
   }
-
-
   addPost() {
     console.log('crash', this.cat);
     if (this.cat.category === '' || this.cat.category === undefined) {
       this.toastr.error('select category', 'Alert!');
-
       return false;
     }
     if (this.cat.userid === '' || this.cat.userid === undefined) {
       this.toastr.error('select user', 'Alert!');
-
       return false;
     }
-
     this.cat.photo = this.photoslistimage;
     this._services.addpostgoogleapi(this.cat).subscribe((Response: any) => {
       if (Response.success === false) {
@@ -139,5 +119,4 @@ export class PlacedataComponent implements OnInit {
       }
     });
   }
-
 }
