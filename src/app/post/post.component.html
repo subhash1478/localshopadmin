@@ -131,7 +131,7 @@
                   <div class="col-md-10">
                     <div class="col-xs-2">
                       <label for="fullDayId_{{i}}"><i class="fa fa-clock-o fa-2x" title="Full Day" aria-hidden="true"></i></label>&nbsp;
-                      <input id="fullDayId_{{i}}" type="checkbox" [(ngModel)]="item.fullDay" (click)="fullDayTime(item)">
+                      <input id="fullDayId_{{i}}" type="checkbox" [(ngModel)]="item.fullDay" (click)="fullDayTime(item,$event)">
                     </div>
                     <div class="col-xs-3">
                       <input type="time" [disabled]="item.fullDay" [(ngModel)]="item.starttime" (blur)="checkFullDay(item)">
