@@ -51,9 +51,6 @@ export class LoginComponent implements OnInit {
     };
 
     this.service.AgentLogin(obj).subscribe((Response: any) => {
-      console.log('====================================');
-      console.log('agent', Response);
-      console.log('====================================');
       localStorage.setItem('token', Response.data.token);
       localStorage.setItem('userdetails', JSON.stringify(Response.data.userDetails));
       this.router.navigateByUrl('dashboard');

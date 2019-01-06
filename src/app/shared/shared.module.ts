@@ -12,10 +12,10 @@ import {KeyFilterModule} from 'primeng/keyfilter';
 
 import { NgxEditorModule } from 'ngx-editor';
 @NgModule({
-  imports: [TableModule,ButtonModule,TooltipModule,DropdownModule,KeyFilterModule,
+  imports: [TableModule, ButtonModule, TooltipModule, DropdownModule, KeyFilterModule,
     CommonModule, RouterModule],
   declarations: [SidemenuComponent],
-  exports: [TableModule,SidemenuComponent,KeyFilterModule,
-     DropdownModule,TooltipModule,NgxEditorModule,ButtonModule, FormsModule, MaterialModule]
+  exports: [TableModule, SidemenuComponent, KeyFilterModule,
+     DropdownModule, TooltipModule, NgxEditorModule, ButtonModule, FormsModule, MaterialModule]
 })
 export class SharedModule { }

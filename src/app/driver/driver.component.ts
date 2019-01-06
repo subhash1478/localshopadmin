@@ -13,12 +13,10 @@ export class DriverComponent implements OnInit {
   crud: string;
   driverList: any = [];
   constructor(public _services: DataService, public toastr: ToastrService ,  vcr: ViewContainerRef) {
-      console.log('message');
   }
   ngOnInit() {
     this._services.getDriver().subscribe((Response: any) => {
       this.driverList = Response.response.data;
-      console.log(Response);
     });
   }
   addCategory() {
@@ -54,13 +52,11 @@ export class DriverComponent implements OnInit {
     }
   }
   edit(item) {
-    console.log(item);
     this.crud = 'edit';
     this.cat = item;
   }
   action(type) {
     this.cat = {};
-    console.log(type);
     this.crud = type;
   }
   onFileChanged(event) {

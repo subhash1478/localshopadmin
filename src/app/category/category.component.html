@@ -21,13 +21,10 @@
           <div class="row">
             <div class="col-md-12">
               <button pTooltip="Add new category" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>
- 
               <p-table [columns]="cols" #dt [value]="category" [tableStyle]="{'table-layout':'auto'}"
-              [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
+              [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" dataKey="title">
                   <ng-template pTemplate="caption">
-
                 <div style="text-align: right">
-
                       <input type="search" pTooltip="search" tooltipPosition ="top" pInputText size="50" placeholder="Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
                         style="width:auto">
                       <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -46,17 +43,12 @@
                      <td>
                         <button pTooltip="Edit" pButton type="button" data-toggle="modal" (click)="edit(item)"
                         data-target="#myModal" icon="pi pi-pencil" iconPos="left"  class="ui-button-info"></button>
-
-                        
-
                         <td> <button pTooltip="delete" pButton type="button" icon="pi pi-trash" iconPos="left" (click)="delete(item)"  class="ui-button-danger"> </button>
                     </td>
                   </tr>
                 </ng-template>
               </p-table>
-          
             </div>
-
           </div>
         </div>
       </div>

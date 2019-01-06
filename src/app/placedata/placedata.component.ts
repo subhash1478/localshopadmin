@@ -35,11 +35,9 @@ export class PlacedataComponent implements OnInit {
      };
     this._services.getPost(obj).subscribe((Response: any) => {
       this.post = Response.data;
-      console.log(this.post);
     });
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
-      console.log(Response);
     });
     this._services.getVendor().subscribe((Response: any) => {
       this.user = Response.data;
@@ -48,16 +46,13 @@ export class PlacedataComponent implements OnInit {
   }
   search() {
     const query = this.q.replace(' ', '+');
-    console.log(query);
     this._services.getPlaces(query).subscribe((response: any) => {
-      console.log('response', response);
       if (response.status === 'OK') {
         this.placelist = response.results;
       } else {
         this.toastr.error(response.error_message, 'Alert!');
       }
     }, (error) => {
-      console.log('error', error);
     });
   }
   photos() {
@@ -68,13 +63,10 @@ export class PlacedataComponent implements OnInit {
       img.push(config.GOOGLE_URL + 'photo?maxwidth=400&photoreference=' + refence + '&' + config.GOOGLE_API_KEY);
     }
     this.photoslistimage = img;
-    console.log(img);
   }
   action(item) {
     this.crud = 'add';
-    console.log(item.place_id);
     this._services.getPlacesDetails(item.place_id).subscribe((Response: any) => {
-      console.log(Response);
       if (Response.status === 'OK') {
         const res = Response.result;
         this.cat.title = res.name;
@@ -93,14 +85,10 @@ export class PlacedataComponent implements OnInit {
   }
   getRegion() {
     this._services.getRegion().subscribe((response: any) => {
-      console.log('====================================');
-      console.log(response);
       this.region = response.data;
-       console.log('====================================');
     });
   }
   addPost() {
-    console.log('crash', this.cat);
     if (this.cat.category === '' || this.cat.category === undefined) {
       this.toastr.error('select category', 'Alert!');
       return false;

@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <button pTooltip="Add new post" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>
               <p-table [columns]="cols" #dt [value]="postFilterByRegion" [tableStyle]="{'table-layout':'auto'}"
-                [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
+                [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single"  dataKey="title">
                 <ng-template pTemplate="caption">
                     <div class="ui-g">
                         <div class="ui-g-4"> <p-dropdown [options]="region" [(ngModel)]="regionSearch" placeholder="Select a Region" optionLabel="title"  ></p-dropdown></div>
@@ -44,7 +44,7 @@
                     <td>{{item.viwed}} </td>
                     <td>{{item.createdAt|date:'short'}}</td>
                     <td>
-                      <button type="button" class="btn btn-info btn-xs" [routerLink]="['id',item._id]">View</button>
+                 
                       <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)"
                         data-target="#myModal">Edit</button>
                       <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" (click)="openTag(item)"
@@ -158,14 +158,14 @@
               </div>
               <div class="form-group">
                 <label>Description</label>
-                 <p-editor [(ngModel)]="text"  [(ngModel)]="cat.description" [style]="{'height':'320px'}"></p-editor>
+                 <p-editor   [(ngModel)]="cat.description" [style]="{'height':'320px'}"></p-editor>
 
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" (click)="addPost()">Save</button>
+          <button type="button" class="btn btn-default" (click)="addPost()"  data-dismiss="modal">Save</button>
         </div>
         <div class="form-group" *ngIf="this.crud=='edit'">
           <label>Image</label>

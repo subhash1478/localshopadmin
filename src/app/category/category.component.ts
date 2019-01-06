@@ -15,7 +15,6 @@ export class CategoryComponent implements OnInit {
   category: any = [];
   cols: { field: string; header: string; }[];
   constructor(public _services: DataService, public toastr: ToastrService, private _http: HttpClient, vcr: ViewContainerRef) {
-     console.log('message');
   }
   ngOnInit() {
     this.cols = [
@@ -24,7 +23,6 @@ export class CategoryComponent implements OnInit {
     ];
     this._services.getCategory().subscribe((Response: any) => {
       this.category = Response.data;
-      console.log(Response);
     });
   }
   addCategory() {
@@ -48,7 +46,6 @@ export class CategoryComponent implements OnInit {
       //     observe: 'events'
       //   })
       //     .subscribe(event => {
-      //       console.log(event); // handle event here
       //     });
       this._services.addCategory(uploadData, this.crud).subscribe((Response: any) => {
         if (Response.success === false) {
@@ -74,16 +71,13 @@ export class CategoryComponent implements OnInit {
     }
   }
   edit(item) {
-    console.log(item);
     this.crud = 'edit';
     this.cat = item;
     this._services.getTags(this.cat._id).subscribe((Response) => {
-      console.log(Response);
     });
   }
   action(type) {
     this.cat = {};
-    console.log(type);
     this.crud = type;
   }
   onFileChanged(event) {

@@ -16,7 +16,6 @@ export class ProductComponent implements OnInit {
   Product: any = [];
   categoryid: any;
   constructor(public _services: DataService, public toastr: ToastrService, private route: ActivatedRoute, vcr: ViewContainerRef) {
-     console.log('message', );
 
 
     this.categoryid = this.route.snapshot.params.id;
@@ -31,13 +30,11 @@ export class ProductComponent implements OnInit {
     this._services.getProduct(obj).subscribe((Response: any) => {
 
 
-      console.log(Response);
       this.Product = Response.response.data;
 
     });
   }
   addCategory() {
-console.log(this.cat);
 
 this.cat.category = this.categoryid;
 
@@ -57,16 +54,13 @@ this.cat.category = this.categoryid;
     }
   }
   edit(item) {
-    console.log(item);
     this.crud = 'edit';
     this.cat = item;
     this._services.getTags(this.cat._id).subscribe((Response) => {
-      console.log(Response);
     });
   }
   action(type) {
     this.cat = {};
-    console.log(type);
     this.crud = type;
   }
   onFileChanged(event) {
@@ -92,7 +86,6 @@ this.cat.category = this.categoryid;
   addImage(event, item) {
     const uploadData = new FormData();
     this.selectedFile = event.target.files;
-    console.log(this.selectedFile);
     for (let i = 0; i < this.selectedFile.length; i++) {
       uploadData.append('product_image', this.selectedFile[i], this.selectedFile[i]['name']);
     }

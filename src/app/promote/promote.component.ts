@@ -104,7 +104,6 @@ export class PromoteComponent implements OnInit {
   addImage(event, item) {
     const uploadData = new FormData();
     this.selectedFile = event.target.files;
-    console.log(this.selectedFile);
     for (let i = 0; i < this.selectedFile.length; i++) {
       uploadData.append('promoter_image', this.selectedFile[i], this.selectedFile[i]['name']);
     }
@@ -119,7 +118,6 @@ export class PromoteComponent implements OnInit {
     });
   }
   getpromoterImage(item) {
-    console.log(item);
     this._services.getpromoteimage(item._id).subscribe((Response: any) => {
       this.promoteimage = Response.response.data;
     });

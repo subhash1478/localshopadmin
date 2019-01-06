@@ -27,7 +27,6 @@ export class OrderdetailsComponent implements OnInit {
     this._services.getOrderById(this.orderid).subscribe((Response: any) => {
       this.cart = Response.response.data[0].cart;
       this.orderList = Response.response.data[0].order;
-      console.log(this.cart);
     });
     this.getDriver();
   }
@@ -37,14 +36,12 @@ export class OrderdetailsComponent implements OnInit {
     });
   }
   assignDriver(event) {
-    console.log(event.target.value);
     const data = {
       id: this.orderid,
       driverid: event.target.value
     };
     this._services.assignDriver(data).subscribe((Response: any) => {
 
-      console.log(Response);
       this.toastr.success(Response.response.message, 'success!');
 
 

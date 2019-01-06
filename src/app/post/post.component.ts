@@ -24,7 +24,7 @@ export class PostComponent implements OnInit {
   category: any = [];
   user: any = [];
   post = [];
-  blockSpace: RegExp = /[^\s]/; 
+  blockSpace: RegExp = /[^\s]/;
     tag: any = [];
   tagval: any = {};
   private sub: any;
@@ -53,7 +53,6 @@ export class PostComponent implements OnInit {
   constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef, private timeService: TimeConvertService) {
   }
   get regionSearch() {
-
     return this._regionSearch;
   }
   set regionSearch(value) {
@@ -65,8 +64,7 @@ export class PostComponent implements OnInit {
       { field: 'title', header: 'title' },
       { field: 'phone', header: 'phone' },
       { field: 'address', header: 'address' },
-      { field: 'category', header: 'category' }]
-
+      { field: 'category', header: 'category' }];
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
         if (params != null) {
@@ -222,7 +220,6 @@ export class PostComponent implements OnInit {
       id: this.cat._id
     };
     this._services.addTag(obj).subscribe((Response: any) => {
-
       this.selectedtags.push(this.tagval.title);
       if (Response.success === false) {
         this.toastr.error(Response.message.message, 'Alert!');
@@ -243,16 +240,12 @@ export class PostComponent implements OnInit {
         if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
         } else {
-
           this.toastr.success(Response.message, 'Success!');
-
         }
       });
     } else {
       this.toastr.error('exists', 'Alert!');
-
     }
-
   }
   deleteTag(item, index) {
     const obj = {
@@ -276,7 +269,6 @@ export class PostComponent implements OnInit {
         if (response.success === false) {
           this.toastr.error(response.message, 'Alert!');
         } else {
-
           this.toastr.success(response.message, 'Success!');
           this.ngOnInit();
         }

@@ -25,11 +25,9 @@ export class ProductcategoryComponent implements OnInit {
     public toastr: ToastrService,
     private activeRoute: ActivatedRoute,
     vcr: ViewContainerRef, private router: Router) {
-    console.log('message');
     this.categoryid = this.activeRoute.snapshot.params.id;
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.params.subscribe(params => {
-        console.log(params);
         if (params != null) {
           this.categoryid = params.id;
         }
@@ -46,14 +44,12 @@ export class ProductcategoryComponent implements OnInit {
     };
     this._services.getPost(data).subscribe((Response: any) => {
       this.post = Response.data;
-      console.log(Response);
     });
     const obj = {
       shopid: this.categoryid
     };
     this._services.getProductCategory(obj).subscribe((Response: any) => {
       this.ProductCategory = Response.response.data;
-      console.log(Response);
     });
   }
   addCategory() {
@@ -90,16 +86,13 @@ export class ProductcategoryComponent implements OnInit {
     }
   }
   edit(item) {
-    console.log(item);
     this.crud = 'edit';
     this.cat = item;
     this._services.getTags(this.cat._id).subscribe((Response) => {
-      console.log(Response);
     });
   }
   action(type) {
     this.cat = {};
-    console.log(type);
     this.crud = type;
   }
   onFileChanged(event) {
@@ -123,7 +116,6 @@ export class ProductcategoryComponent implements OnInit {
     }
   }
   changeValue($event: any) {
-    console.log($event.value[0]._id);
     this.router.navigate([`/product-category/category/${$event.value[0]._id}`]);
   }
 }

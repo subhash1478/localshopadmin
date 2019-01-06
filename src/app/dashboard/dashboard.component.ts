@@ -16,12 +16,10 @@ export class DashboardComponent implements OnInit {
   filteredVendors: any = [];
   private _searchTerm: any;
   category: any = [];
-
   constructor(
     public _services: DataService, public toastr: ToastrService, vcr: ViewContainerRef) {
   }
   ngOnInit() {
-    
     this._services.getVendor().subscribe((Response: any) => {
       const result = Response.data;
       result.sort((a, b): any => {

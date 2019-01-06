@@ -26,7 +26,6 @@
                             <button pTooltip="Add new User" label="Add"  pButton type="button" icon="pi pi-plus" iconPos="left"  data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>     
                         </div>
                     </div>
-                        
                     <div class="ui-g-12 ui-md-6">
                         <div class="ui-inputgroup">
                             <button pButton type="button" label="Search"></button>
@@ -34,15 +33,8 @@
                         </div>
                     </div>
                   </div>
- 
-             
-         
-
-                
-              <p-table [columns]="cols" #dt [value]="filteredVendors" [tableStyle]="{'table-layout':'auto'}"
-              [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" [(selection)]="userda" dataKey="title">
-
-     
+              <p-table  #dt [value]="filteredVendors" [tableStyle]="{'table-layout':'auto'}"
+              [paginator]="true" [rows]="8" [responsive]="true" selectionMode="single" dataKey="title">
               <ng-template pTemplate="header">
                 <tr>
                     <th >Username</th>
@@ -59,7 +51,6 @@
               </ng-template>
               <ng-template pTemplate="body" let-item>
                 <tr>
-                
                     <td>{{item.firstname}} {{item.lastname}}</td>
                     <td>{{item.address}}</td>
                     <td>{{item.city}}</td>
@@ -82,7 +73,6 @@
                     <td> 
                         <button pTooltip="Edit" pButton type="button" data-toggle="modal" (click)="edit(item)"
                         data-target="#myModal" icon="pi pi-pencil" iconPos="left"  class="ui-button-info"></button>
-
                       </td> 
                       </tr>
               </ng-template>
@@ -96,8 +86,6 @@
                 </div>
               </ng-template>
             </p-table>
-            
-            
             </div>
           </div>
         </div>

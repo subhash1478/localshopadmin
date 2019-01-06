@@ -14,7 +14,6 @@ export class OrderComponent implements OnInit {
   crud: string;
   orderList: any = [];
   constructor(public _services: DataService, public toastr: ToastrService, private _http: HttpClient, vcr: ViewContainerRef) {
-    console.log('message');
   }
   ngOnInit() {
     this._services.getOrder().subscribe((Response: any) => {
@@ -27,7 +26,6 @@ export class OrderComponent implements OnInit {
 
       });
       this.orderList = result;
-      console.log(result);
     });
   }
   addCategory() {
@@ -51,7 +49,6 @@ export class OrderComponent implements OnInit {
       //     observe: 'events'
       //   })
       //     .subscribe(event => {
-      //       console.log(event); // handle event here
       //     });
       this._services.addCategory(uploadData, this.crud).subscribe((Response: any) => {
         if (Response.success === false) {
@@ -77,16 +74,13 @@ export class OrderComponent implements OnInit {
     }
   }
   edit(item) {
-    console.log(item);
     this.crud = 'edit';
     this.cat = item;
     this._services.getTags(this.cat._id).subscribe((Response) => {
-      console.log(Response);
     });
   }
   action(type) {
     this.cat = {};
-    console.log(type);
     this.crud = type;
   }
   onFileChanged(event) {

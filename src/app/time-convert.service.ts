@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
 export class TimeConvertService {
-
   constructor() { }
-
   timeConvertFunction(val) {
-
     const array = [];
-
-// tslint:disable-next-line:max-line-length
-/* var a = ["Monday: 12:00 AM – 11:59 PM","Tuesday: 5:00 AM – 2:00 AM","Wednesday: 5:00 AM – 2:00 AM","Thursday: 5:00 AM – 2:00 AM","Friday: 5:00 AM – 2:00 AM","Saturday: 5:00 AM – 2:00 AM","Sunday: 5:00 AM – 2:00 AM"];*/
    val.forEach(element => {
      const splitDayTime = element.split(': ');
      const day = splitDayTime[0];
@@ -20,31 +13,19 @@ export class TimeConvertService {
      const time_split = time.split(' ');
      const start_time = time_split[0] + ' ' + time_split[1];
      const end_time = time_split[3] + ' ' + time_split[4];
-
      const start_time_converted = this.amPmTo(start_time);
      const end_time_converted = this.amPmTo(end_time);
-     // console.log(convertTime(start_time)+" "+convertTime(end_time))
-
      const obj = {
          date: day,
          fullDay: (start_time_converted === '00:00' && end_time_converted === '23:59') ? true : false,
          starttime: start_time_converted,
          endtime: end_time_converted
      };
-
      array.push(obj);
-
    });
-
    return array;
-
   }
-
-
-
-
    amPmTo(val) {
-
        const time = val;
        let hours = Number(time.match(/^(\d+)/)[1]);
        const minutes = Number(time.match(/:(\d+)/)[1]);

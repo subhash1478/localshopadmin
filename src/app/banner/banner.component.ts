@@ -21,7 +21,6 @@ export class BannerComponent implements OnInit  {
   crud: string;
   category: any = [];
   constructor(public _services: DataService, public toastr: ToastrService, private _http: HttpClient, vcr: ViewContainerRef) {
-     console.log('message');
   }
   ngOnInit() {
     this.getBanner();
@@ -30,7 +29,6 @@ export class BannerComponent implements OnInit  {
   getBanner() {
     this._services.getBanner().subscribe((Response: any) => {
       this.category = Response.response.data;
-      console.log(Response);
     });
   }
   getPost() {
@@ -52,10 +50,8 @@ export class BannerComponent implements OnInit  {
     });
   }
   addImage(event, item) {
-    console.log(event, item);
     const uploadData = new FormData();
       this.selectedFile = event.target.files;
-      console.log(this.selectedFile);
       for (let i = 0; i < this.selectedFile.length; i++) {
         uploadData.append('banner_image', this.selectedFile[i], this.selectedFile[i]['name']);
       }
@@ -85,13 +81,11 @@ export class BannerComponent implements OnInit  {
     }
   }
   showoption(objdata, item) {
-console.log( this.myControl);
     const obj = {
       linkto: objdata._id,
       id: item.id
     };
     this._services.linkTo(obj).subscribe((Response) => {
-console.log(Response);
 this.getBanner();
     });
   }
