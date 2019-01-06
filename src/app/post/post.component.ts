@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import {TimeConvertService} from '../time-convert.service';
 import * as _ from 'underscore';
 @Component({
   selector: 'app-post',
@@ -29,24 +30,27 @@ export class PostComponent implements OnInit {
   private sub: any;
   id: any;
   region: any = [];
-  defaultFullday: any = { startTime: '00:00', EndTime: '11:59' };
-  timing: any = [{
-    date: 'Monday', fullDay: false, starttime: '', endtime: ''
-  }, {
-    date: 'Tuesday', fullDay: false, starttime: '', endtime: ''
-  }, {
-    date: 'Wednesday', fullDay: false, starttime: '', endtime: ''
-  }, {
-    date: 'Thursday', fullDay: false, starttime: '', endtime: ''
-  }, {
-    date: 'Friday', fullDay: false, starttime: '', endtime: ''
-  }, {
-    date: 'Saturday', fullDay: false, starttime: '', endtime: '',
-  }, {
-    date: 'Sunday', fullDay: false, starttime: '', endtime: ''
-  }];
+  timing: any = [];
+  timingConstructerFunction:  any = class {
+    timing = [{
+      date: 'Monday', fullDay: false, starttime: '', endtime: ''
+    }, {
+      date: 'Tuesday', fullDay: false, starttime: '', endtime: ''
+    }, {
+      date: 'Wednesday', fullDay: false, starttime: '', endtime: ''
+    }, {
+      date: 'Thursday', fullDay: false, starttime: '', endtime: ''
+    }, {
+      date: 'Friday', fullDay: false, starttime: '', endtime: ''
+    }, {
+      date: 'Saturday', fullDay: false, starttime: '', endtime: '',
+    }, {
+      date: 'Sunday', fullDay: false, starttime: '', endtime: ''
+    }];
+  };
   cols: { field: string; header: string; }[];
-  constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef) {
+  // tslint:disable-next-line:max-line-length
+  constructor(public _services: DataService, public toastr: ToastrService, private activeRoute: ActivatedRoute, vcr: ViewContainerRef, private timeService: TimeConvertService) {
   }
   get regionSearch() {
 
@@ -76,6 +80,7 @@ export class PostComponent implements OnInit {
     }
     this._services.getPost(obj).subscribe((Response: any) => {
       const result = Response.data;
+      // tslint:disable-next-line:no-shadowed-variable
       result.sort((a, b): any => {
         const date1 = new Date(a.createdAt);
         const date2 = new Date(b.createdAt);
@@ -96,7 +101,7 @@ export class PostComponent implements OnInit {
     this.timing.forEach(element => {
       element.starttime = this.timing[0].starttime;
       element.endtime = this.timing[0].endtime;
-      if (this.timing[0].starttime === '00:01' && this.timing[0].endtime === '23:59') {
+      if (this.timing[0].starttime === '00:00' && this.timing[0].endtime === '23:59') {
         element.fullDay = true;
       }
     });
@@ -113,14 +118,17 @@ export class PostComponent implements OnInit {
     item.endtime = '';
     this.checkFullDay(item);
   }
-  fullDayTime(item) {
-    item.starttime = '00:01';
-    item.endtime = '23:59';
+  fullDayTime(item, e?) {
+    if (e.target.checked) {
+      item.starttime = '00:00';
+      item.endtime = '23:59';
+    } else {
+      item.starttime = '';
+      item.endtime = '';
+    }
   }
   checkFullDay(item) {
-    if (item.starttime !== '00:01' || item.endtime !== '23:59') {
-      item.fullDay = false;
-    }
+    item.fullDay = (item.starttime !== '00:00' || item.endtime !== '23:59') ? false : true;
   }
   filterByRegion(item) {
     const searchString = item._id;
@@ -157,12 +165,21 @@ export class PostComponent implements OnInit {
     }
   }
   edit(item) {
-    this.getRegion();
     this.crud = 'edit';
     this.cat = item;
     this.cat.category = item.category._id;
     this.cat.userid = item.userid._id;
-    this.timing = item.timing;
+    if (typeof item.timing[0] === 'string') {
+      const convertedTimeObj = this.timeService.timeConvertFunction(item.timing);
+      this.timing = convertedTimeObj;
+    } else {
+      item.timing.forEach(element => {
+        if (!('fullDay' in element)) {
+          element['fullDay'] = (element.starttime === '00:00' && element.endtime === '23:59') ? true : false;
+        }
+      });
+      this.timing = item.timing;
+    }
   }
   openTag(item) {
     this.crud = 'edit';
@@ -173,9 +190,10 @@ export class PostComponent implements OnInit {
     });
   }
   action(type) {
-    this.getRegion();
     this.cat = {};
     this.crud = type;
+    const time: any = new this.timingConstructerFunction();
+    this.timing = time.timing;
   }
   onFileChanged(event) {
     const uploadData = new FormData();
