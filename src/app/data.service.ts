@@ -93,6 +93,9 @@ export class DataService {
   addProduct(data) {
     return this._http.post(`${config.SAILS_API}/api/add-product`, data);
   }
+  updateProductActiveStaus(data) {
+    return this._http.post(`${config.SAILS_API}/api/update-product-active-status`, data);
+  }
   addproductcategory(data, type) {
     return this._http.post(`${config.SAILS_API}/api/add-product-category`, data);
   }
