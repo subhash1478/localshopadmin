@@ -16,11 +16,11 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Product     Management</h3>
+            <h3 class="box-title">Product Management</h3>
           </div>
           <div class="row">
             <div class="col-md-12">
-              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')"  data-target="#myModal">Add</button>
+              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')" data-target="#myModal">Add</button>
               <table class="table">
                 <thead>
                   <tr>
@@ -33,86 +33,97 @@
                     <th scope="col">offerprice</th>
                     <th scope="col">status</th>
                     <th scope="col">discount</th>
-                     <!-- <th scope="col">Action</th> -->
+                    <!-- <th scope="col">Action</th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of Product;let i = index">
                     <th scope="row">{{i+1}}</th>
-                    <td>   <input  
- s                      type="file" (change)="addImage($event,item.id)" 
-                      #fileInput>
-                     </td>
-                    <td> {{item.title}}  </td>
-                    <td> {{item.product_category.title}}  </td>
-                    <td><del>  {{item.price|currency:'INR'}}  </del></td>
-                    <td>{{item.offerprice|currency:'INR'}}  </td>
-                    <td> {{(item.status==1)?'Active':'Disable'}}  </td>
+                    <td> <input s type="file" (change)="addImage($event,item.id)" #fileInput>
+                    </td>
+                    <td> {{item.title}} </td>
+                    <td> {{item.product_category.title}} </td>
+                    <td><del> {{item.price|currency:'INR'}} </del></td>
+                    <td>{{item.offerprice|currency:'INR'}} </td>
+                    <td> {{(item.status==1)?'Active':'Disable'}} </td>
                     <td> {{item.discount}} % </td>
+                    <td>
+                      {{item.active}}
+                      <select tooltipPosition="top" [(ngModel)]="item.active" [ngClass]="(item.active) ? 'btn btn-success' : 'btn btn-danger'"
+                        (change)="change_active_status($event.target.value,item)">
+                        <option value="true">
+                          YES
+                        </option>
+                        <option value="false">
+                          NO
+                        </option>
+                      </select>
+                    </td>
 
-                     <!-- <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
+                    <!-- <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
                       <td> <button type="button" class="btn btn-danger btn-xs" 
                          (click)="delete(item)"  >Delete</button>
                       </td> -->
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>  </div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{{crud|uppercase}} Category</h4>
-          </div>
-          <div class="modal-body">
-            <div class="box box-primary">
-              <div class="box-body">
- 
-                <div class="form-group">
-                  <label for="exampleInput1">Title</label>
-                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.title"  >
-                </div>
-
-               <div class="form-group">
-                  <label for="exampleInput1">Price</label>
-                    <input type="number"   min="0"  name="Price" class="form-control"  placeholder="" [(ngModel)]="cat.price"  >
-                
-                </div>
-
-           
-                <div class="form-group">
-                    <label for="exampleInput1">Offer Price</label>
-                    <input type="number" name="Offer" class="form-control"  placeholder="" [(ngModel)]="cat.offerprice"  >
-                  </div>
-  
-           
-                  <div class="form-group">
-                      <label for="exampleInput1">discount</label>
-                      <input type="number" min="0" max="100" name="discount" class="form-control"  placeholder="" [(ngModel)]="cat.discount"  >
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="exampleInput1">status</label>
-             
-                        <select name="category" class="form-control" [(ngModel)]="cat.status">
-                            <option  value="0">Active</option>
-                            <option  value="1">Disable</option>
-                          </select>
-                      </div>
-      
-                 
-              </div>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <button type="button" class="btn btn-default"  (click)="addCategory()" >{{crud|uppercase}}</button>
           </div>
         </div>
       </div>
     </div>
+  </section>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{crud|uppercase}} Category</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box box-primary">
+          <div class="box-body">
+
+            <div class="form-group">
+              <label for="exampleInput1">Title</label>
+              <input type="text" name="title" class="form-control" placeholder="" [(ngModel)]="cat.title">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInput1">Price</label>
+              <input type="number" min="0" name="Price" class="form-control" placeholder="" [(ngModel)]="cat.price">
+
+            </div>
+
+
+            <div class="form-group">
+              <label for="exampleInput1">Offer Price</label>
+              <input type="number" name="Offer" class="form-control" placeholder="" [(ngModel)]="cat.offerprice">
+            </div>
+
+
+            <div class="form-group">
+              <label for="exampleInput1">discount</label>
+              <input type="number" min="0" max="100" name="discount" class="form-control" placeholder="" [(ngModel)]="cat.discount">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInput1">status</label>
+
+              <select name="category" class="form-control" [(ngModel)]="cat.status">
+                <option value="0">Active</option>
+                <option value="1">Disable</option>
+              </select>
+            </div>
+
+
+          </div>
+        </div>
+        <button type="button" class="btn btn-default" (click)="addCategory()">{{crud|uppercase}}</button>
+      </div>
+    </div>
+  </div>
+</div>

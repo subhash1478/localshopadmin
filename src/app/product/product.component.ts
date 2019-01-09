@@ -34,6 +34,26 @@ export class ProductComponent implements OnInit {
 
     });
   }
+
+  change_active_status(val, item) {
+    console.log(item);
+    const active_obj = {
+      _id: item.id,
+      active: val
+    };
+    
+    
+    this._services.updateProductActiveStaus(active_obj).subscribe((Response: any) => {
+      if (Response.success === false) {
+        if (Response.message.message) {
+          this.toastr.error(Response.message.message, 'Alert!');
+        }
+        this.toastr.error(Response.message, 'Alert!');
+      } else {
+        this.toastr.success(Response.message, 'Success!');
+      }
+    });
+  }
   addCategory() {
 
 this.cat.category = this.categoryid;
