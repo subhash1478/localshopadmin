@@ -16,7 +16,7 @@ export class PromoteComponent implements OnInit {
   newlocation: any;
   promoteLocationList: any = [];
   promoteimage: any = [];
-  constructor( public _services: DataService, public toastr: ToastrService,  vcr: ViewContainerRef) {
+  constructor(public _services: DataService, public toastr: ToastrService, vcr: ViewContainerRef) {
   }
   ngOnInit() {
     this._services.getpromoter().subscribe((Response: any) => {
@@ -32,9 +32,9 @@ export class PromoteComponent implements OnInit {
   addCategory(item) {
     this.crud = item;
     const uploadData = new FormData();
-    uploadData.append('promoterimage', this.selectedFile, this.selectedFile.name );
-    uploadData.append('param', JSON.stringify(this.cat) );
-    this._services.addpromoter(uploadData, this.crud).subscribe(( Response: any) => {
+    uploadData.append('promoterimage', this.selectedFile, this.selectedFile.name);
+    uploadData.append('param', JSON.stringify(this.cat));
+    this._services.addpromoter(uploadData, this.crud).subscribe((Response: any) => {
       if (Response.success === false) {
         this.toastr.error(Response.message.message, 'Alert!');
       } else {

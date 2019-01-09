@@ -32,7 +32,7 @@ export class PlacedataComponent implements OnInit {
   ngOnInit() {
     const obj = {
       id: '',
-     };
+    };
     this._services.getPost(obj).subscribe((Response: any) => {
       this.post = Response.data;
     });

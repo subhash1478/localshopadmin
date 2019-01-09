@@ -18,18 +18,15 @@ export class OrderComponent implements OnInit {
   ngOnInit() {
     this._services.getOrder().subscribe((Response: any) => {
       const result = Response.response.data;
-
       result.sort((a, b): any => {
         const date1 = new Date(a.order.createdAt);
         const date2 = new Date(b.order.createdAt);
         return date2.getTime() - date1.getTime();
-
       });
       this.orderList = result;
     });
   }
   addCategory() {
-
     if (this.crud === 'edit') {
       this._services.editCategory(this.cat).subscribe((Response: any) => {
         if (Response.success === false) {
@@ -44,12 +41,7 @@ export class OrderComponent implements OnInit {
       const uploadData = new FormData();
       uploadData.append('category_image', this.selectedFile, this.selectedFile.name);
       uploadData.append('param', JSON.stringify(this.cat));
-      // this._http.post('http://localhost:3001/api/add-category', uploadData, {
-      //     reportProgress: true,
-      //     observe: 'events'
-      //   })
-      //     .subscribe(event => {
-      //     });
+      
       this._services.addCategory(uploadData, this.crud).subscribe((Response: any) => {
         if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
@@ -60,9 +52,6 @@ export class OrderComponent implements OnInit {
         }
       });
     }
-
-
-
   }
   fileChange(event) {
     const fileList: FileList = event.target.files;

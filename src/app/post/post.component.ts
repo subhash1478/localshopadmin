@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-import {TimeConvertService} from '../time-convert.service';
+import { TimeConvertService } from '../time-convert.service';
 import * as _ from 'underscore';
 @Component({
   selector: 'app-post',
@@ -25,13 +25,13 @@ export class PostComponent implements OnInit {
   user: any = [];
   post = [];
   blockSpace: RegExp = /[^\s]/;
-    tag: any = [];
+  tag: any = [];
   tagval: any = {};
   private sub: any;
   id: any;
   region: any = [];
   timing: any = [];
-  timingConstructerFunction:  any = class {
+  timingConstructerFunction: any = class {
     timing = [{
       date: 'Monday', fullDay: false, starttime: '', endtime: ''
     }, {

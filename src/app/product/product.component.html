@@ -25,15 +25,15 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">image</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Title</th>
 
                     <th scope="col">Category</th>
-                    <th scope="col">price</th>
-                    <th scope="col">offerprice</th>
-                    <th scope="col">status</th>
-                    <th scope="col">discount</th>
-                    <!-- <th scope="col">Action</th> -->
+                    <th scope="col">Price</th>
+                    <th scope="col">Offer Price</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">In Shop</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -48,8 +48,8 @@
                     <td> {{(item.status==1)?'Active':'Disable'}} </td>
                     <td> {{item.discount}} % </td>
                     <td>
-                      {{item.active}}
-                      <select tooltipPosition="top" [(ngModel)]="item.active" [ngClass]="(item.active) ? 'btn btn-success' : 'btn btn-danger'"
+                       
+                      <!-- <select  [(ngModel)]="item.active" [ngClass]="(item.active) ? 'btn btn-success' : 'btn btn-inverse'"
                         (change)="change_active_status($event.target.value,item)">
                         <option value="true">
                           YES
@@ -57,7 +57,11 @@
                         <option value="false">
                           NO
                         </option>
-                      </select>
+                      </select> -->
+                     
+                      <p-toggleButton onLabel="Available" offLabel="Unavailable
+                      " onIcon="fa fa-check" offIcon="fa fa-times"
+                        iconPos="right" (change)="change_active_status($event.target.value,item)" [(ngModel)]="item.active"></p-toggleButton>
                     </td>
 
                     <!-- <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>

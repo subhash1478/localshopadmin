@@ -2,16 +2,13 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
- import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css']
 })
-export class BannerComponent implements OnInit  {
-    myControl: any;
+export class BannerComponent implements OnInit {
+  myControl: any;
   options: string[] = [];
   filteredOptions: any = [];
   filteredOptionsData: any = [];
@@ -51,23 +48,23 @@ export class BannerComponent implements OnInit  {
   }
   addImage(event, item) {
     const uploadData = new FormData();
-      this.selectedFile = event.target.files;
-      for (let i = 0; i < this.selectedFile.length; i++) {
-        uploadData.append('banner_image', this.selectedFile[i], this.selectedFile[i]['name']);
+    this.selectedFile = event.target.files;
+    for (let i = 0; i < this.selectedFile.length; i++) {
+      uploadData.append('banner_image', this.selectedFile[i], this.selectedFile[i]['name']);
+    }
+    this._services.addBannerimage(uploadData, item).subscribe((Response: any) => {
+      if (Response.success === false) {
+        this.toastr.error(Response.message.message, 'Alert!');
+      } else {
+        this.toastr.success(Response.message, 'Success!');
       }
-      this._services.addBannerimage(uploadData, item).subscribe((Response: any) => {
-        if (Response.success === false) {
-          this.toastr.error(Response.message.message, 'Alert!');
-        } else {
-          this.toastr.success(Response.message, 'Success!');
-        }
-      }, (Error) => {
-      });
+    }, (Error) => {
+    });
   }
   delete(item) {
     const confirmAlert = confirm('Are you sure want to this item ?');
-    if (confirmAlert === true) {
-       const obj = {
+    if (confirmAlert) {
+      const obj = {
         id: item.id
       };
       this._services.deleteBanner(obj).subscribe((response: any) => {
@@ -86,7 +83,7 @@ export class BannerComponent implements OnInit  {
       id: item.id
     };
     this._services.linkTo(obj).subscribe((Response) => {
-this.getBanner();
+      this.getBanner();
     });
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -16,33 +15,21 @@ export class ProductComponent implements OnInit {
   Product: any = [];
   categoryid: any;
   constructor(public _services: DataService, public toastr: ToastrService, private route: ActivatedRoute, vcr: ViewContainerRef) {
-
-
     this.categoryid = this.route.snapshot.params.id;
-
-
   }
   ngOnInit() {
-
     const obj = {
       id: this.categoryid
     };
     this._services.getProduct(obj).subscribe((Response: any) => {
-
-
       this.Product = Response.response.data;
-
     });
   }
-
   change_active_status(val, item) {
-    console.log(item);
     const active_obj = {
       _id: item.id,
       active: val
     };
-    
-    
     this._services.updateProductActiveStaus(active_obj).subscribe((Response: any) => {
       if (Response.success === false) {
         if (Response.message.message) {
@@ -55,14 +42,11 @@ export class ProductComponent implements OnInit {
     });
   }
   addCategory() {
-
-this.cat.category = this.categoryid;
-
+    this.cat.category = this.categoryid;
     this._services.addProduct(this.cat).subscribe((Response: any) => {
       this.toastr.success(Response.response.message, 'Success!');
       this.ngOnInit();
     });
-
   }
   fileChange(event) {
     const fileList: FileList = event.target.files;

@@ -26,8 +26,7 @@ export class CategoryComponent implements OnInit {
     });
   }
   addCategory() {
-
-    if ( this.crud === 'edit' ) {
+    if (this.crud === 'edit') {
       this._services.editCategory(this.cat).subscribe((Response: any) => {
         if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
@@ -41,12 +40,6 @@ export class CategoryComponent implements OnInit {
       const uploadData = new FormData();
       uploadData.append('category_image', this.selectedFile, this.selectedFile.name);
       uploadData.append('param', JSON.stringify(this.cat));
-      // this._http.post('http://localhost:3001/api/add-category', uploadData, {
-      //     reportProgress: true,
-      //     observe: 'events'
-      //   })
-      //     .subscribe(event => {
-      //     });
       this._services.addCategory(uploadData, this.crud).subscribe((Response: any) => {
         if (Response.success === false) {
           this.toastr.error(Response.message.message, 'Alert!');
@@ -57,9 +50,6 @@ export class CategoryComponent implements OnInit {
         }
       });
     }
-
-
-
   }
   fileChange(event) {
     const fileList: FileList = event.target.files;
@@ -85,7 +75,7 @@ export class CategoryComponent implements OnInit {
   }
   delete(item) {
     const confirmAlert = confirm('Are you sure want to this item ?');
-    if (confirmAlert === true) {
+    if (confirmAlert) {
       const tbl = 'category';
       const obj = {
         catid: item._id

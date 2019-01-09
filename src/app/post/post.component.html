@@ -76,7 +76,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{crud|uppercase}} Category</h4>
+        <h4 class="modal-title">{{crud|uppercase}} Post</h4>
       </div>
       <div class="modal-body">
         <div class="box box-primary">
@@ -149,12 +149,19 @@
                 <input type="tel"  name="phone" class="form-control" pInputText pKeyFilter="int" placeholder="phone" [(ngModel)]="cat.phone">
               </div>
               <div class="form-group">
-                <label>Rating</label>
-                <input type="number" name="rating"  pInputText pKeyFilter="int"  class="form-control" placeholder="" [(ngModel)]="cat.rating">
+                <label>Rating You have rated {{cat.rating}}
+                </label>
+                
+                <p-rating [(ngModel)]="cat.rating" [cancel]="false"></p-rating>
+
               </div>
               <div class="form-group">
                 <label>Website link</label>
-                <input type="url" name="website" pInputText [pKeyFilter]="blockSpace" class="form-control" placeholder="" [(ngModel)]="cat.website">
+                 <div class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon">www</span>
+                  <input  type="url" name="website" pInputText [pKeyFilter]="blockSpace" class="form-control" placeholder="" [(ngModel)]="cat.website">      
+              </div>
+               
               </div>
               <div class="form-group">
                 <label>Description</label>
@@ -165,7 +172,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" (click)="addPost()"  data-dismiss="modal">Save</button>
+          
+          <button icon="pi pi-check" iconPos="right"  pButton type="button" (click)="addPost()"  data-dismiss="modal" label="Save" class="ui-button-rounded ui-button-success"></button>
+
         </div>
         <div class="form-group" *ngIf="this.crud=='edit'">
           <label>Image</label>
