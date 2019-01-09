@@ -16,7 +16,7 @@ export class ProductcategoryComponent implements OnInit {
   ProductCategory: any = [];
   categoryid: any;
   config = {
-    displayKey: 'title', // if objects array passed which key to be displayed defaults to description
+    displayKey: 'title',
     search: true,
   };
   post: any = [];

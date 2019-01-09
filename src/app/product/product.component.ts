@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit {
   change_active_status(val, item) {
     const active_obj = {
       _id: item.id,
-      active: val
+      active: val.checked
     };
     this._services.updateProductActiveStaus(active_obj).subscribe((Response: any) => {
       if (Response.success === false) {

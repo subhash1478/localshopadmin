@@ -27,7 +27,6 @@
                     <th scope="col">#</th>
                     <th scope="col">Image</th>
                     <th scope="col">Title</th>
-
                     <th scope="col">Category</th>
                     <th scope="col">Price</th>
                     <th scope="col">Offer Price</th>
@@ -48,22 +47,10 @@
                     <td> {{(item.status==1)?'Active':'Disable'}} </td>
                     <td> {{item.discount}} % </td>
                     <td>
-                       
-                      <!-- <select  [(ngModel)]="item.active" [ngClass]="(item.active) ? 'btn btn-success' : 'btn btn-inverse'"
-                        (change)="change_active_status($event.target.value,item)">
-                        <option value="true">
-                          YES
-                        </option>
-                        <option value="false">
-                          NO
-                        </option>
-                      </select> -->
-                     
                       <p-toggleButton onLabel="Available" offLabel="Unavailable
                       " onIcon="fa fa-check" offIcon="fa fa-times"
-                        iconPos="right" (change)="change_active_status($event.target.value,item)" [(ngModel)]="item.active"></p-toggleButton>
+                        iconPos="right" (onChange)="change_active_status($event,item)" [(ngModel)]="item.active"></p-toggleButton>
                     </td>
-
                     <!-- <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
                       <td> <button type="button" class="btn btn-danger btn-xs" 
                          (click)="delete(item)"  >Delete</button>
@@ -90,40 +77,29 @@
       <div class="modal-body">
         <div class="box box-primary">
           <div class="box-body">
-
             <div class="form-group">
               <label for="exampleInput1">Title</label>
               <input type="text" name="title" class="form-control" placeholder="" [(ngModel)]="cat.title">
             </div>
-
             <div class="form-group">
               <label for="exampleInput1">Price</label>
               <input type="number" min="0" name="Price" class="form-control" placeholder="" [(ngModel)]="cat.price">
-
             </div>
-
-
             <div class="form-group">
               <label for="exampleInput1">Offer Price</label>
               <input type="number" name="Offer" class="form-control" placeholder="" [(ngModel)]="cat.offerprice">
             </div>
-
-
             <div class="form-group">
               <label for="exampleInput1">discount</label>
               <input type="number" min="0" max="100" name="discount" class="form-control" placeholder="" [(ngModel)]="cat.discount">
             </div>
-
             <div class="form-group">
               <label for="exampleInput1">status</label>
-
               <select name="category" class="form-control" [(ngModel)]="cat.status">
                 <option value="0">Active</option>
                 <option value="1">Disable</option>
               </select>
             </div>
-
-
           </div>
         </div>
         <button type="button" class="btn btn-default" (click)="addCategory()">{{crud|uppercase}}</button>
