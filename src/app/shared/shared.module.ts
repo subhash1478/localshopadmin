@@ -12,12 +12,17 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { NgxEditorModule } from 'ngx-editor';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RatingModule } from 'primeng/rating';
+import {ToolbarModule} from 'primeng/toolbar';
+import {CalendarModule} from 'primeng/calendar';
 
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 @NgModule({
-  imports: [TableModule, ButtonModule, RatingModule, TooltipModule, DropdownModule, KeyFilterModule,
-    CommonModule, RouterModule, ToggleButtonModule],
+  imports: [TableModule, ButtonModule, CalendarModule, RatingModule, ToolbarModule, TooltipModule, DropdownModule, KeyFilterModule,
+    CommonModule, RouterModule, ToggleButtonModule, MessagesModule, MessageModule],
   declarations: [SidemenuComponent],
-  exports: [TableModule, SidemenuComponent, RatingModule, KeyFilterModule, ToggleButtonModule,
+  exports: [TableModule, SidemenuComponent, CalendarModule,
+    ToolbarModule, MessagesModule, MessageModule, RatingModule, KeyFilterModule, ToggleButtonModule,
     DropdownModule, TooltipModule, NgxEditorModule, ButtonModule, FormsModule, MaterialModule]
 })
 export class SharedModule { }

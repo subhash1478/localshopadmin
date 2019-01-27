@@ -2,94 +2,54 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import moment from 'moment';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-  selectedFile: File;
-  filedata: FormData;
-  cat: any = {};
-  crud: string;
+
+
   orderList: any = [];
+  cols: { field: string; header: string; }[];
   constructor(public _services: DataService, public toastr: ToastrService, private _http: HttpClient, vcr: ViewContainerRef) {
   }
   ngOnInit() {
+
     this._services.getOrder().subscribe((Response: any) => {
       const result = Response.response.data;
-      result.sort((a, b): any => {
-        const date1 = new Date(a.order.createdAt);
-        const date2 = new Date(b.order.createdAt);
+      const order = result.map((item) => item.order);
+      Object.keys(order).map((key) => {
+        order[key].shopname = order[key].shopid.title;
+        order[key].shopid = order[key].shopid.id;
+        order[key].username = `${order[key].userid.firstname} ${order[key].userid.lastname}`;
+        order[key].userid = order[key].userid.id;
+        order[key].userid = order[key].userid.id;
+        order[key].totalprice = order[key].totalprice;
+        order[key].status = (order[key].status === 0) ? 'pending' : 'delivered';
+        order[key].createdAt = moment(order[key].createdAt).format('lll');
+        order[key].driverId = (order[key].driverid) ? order[key].driverid.id : '';
+        order[key].driverUsername = (order[key].driverid) ? `${order[key].driverid.driver_first_name}
+        ${order[key].driverid.driver_last_name}` : '';
+      });
+      order.sort((a, b): any => {
+        const date1 = new Date(a.createdAt);
+        const date2 = new Date(b.createdAt);
         return date2.getTime() - date1.getTime();
       });
-      this.orderList = result;
+      this.orderList = order;
+      this.cols = [
+        { field: 'orderid', header: 'Order id' },
+        { field: 'createdAt', header: 'Order date' },
+        { field: 'status', header: 'Order status' },
+        { field: 'driverUsername', header: 'Driver' },
+        { field: 'username', header: 'User' },
+        { field: 'shopname', header: 'Shop' },
+        { field: 'totalprice', header: 'Total Price' }
+      ];
     });
   }
-  addCategory() {
-    if (this.crud === 'edit') {
-      this._services.editCategory(this.cat).subscribe((Response: any) => {
-        if (Response.success === false) {
-          this.toastr.error(Response.message.message, 'Alert!');
-        } else {
-          this.cat = {};
-          this.toastr.success(Response.message, 'Success!');
-          this.ngOnInit();
-        }
-      });
-    } else {
-      const uploadData = new FormData();
-      uploadData.append('category_image', this.selectedFile, this.selectedFile.name);
-      uploadData.append('param', JSON.stringify(this.cat));
-      
-      this._services.addCategory(uploadData, this.crud).subscribe((Response: any) => {
-        if (Response.success === false) {
-          this.toastr.error(Response.message.message, 'Alert!');
-        } else {
-          this.cat = {};
-          this.toastr.success(Response.message, 'Success!');
-          this.ngOnInit();
-        }
-      });
-    }
-  }
-  fileChange(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      const file: File = fileList[0];
-      const formData: FormData = new FormData();
-      formData.append('sampleFile', file, file.name);
-      this.filedata = formData;
-    }
-  }
-  edit(item) {
-    this.crud = 'edit';
-    this.cat = item;
-    this._services.getTags(this.cat._id).subscribe((Response) => {
-    });
-  }
-  action(type) {
-    this.cat = {};
-    this.crud = type;
-  }
-  onFileChanged(event) {
-    this.selectedFile = event.target.files[0];
-  }
-  delete(item) {
-    const confirmAlert = confirm('Are you sure want to this item ?');
-    if (confirmAlert === true) {
-      const tbl = 'category';
-      const obj = {
-        catid: item._id
-      };
-      this._services.delete(tbl, obj).subscribe((response: any) => {
-        if (response.success === false) {
-          this.toastr.error(response.message, 'Alert!');
-        } else {
-          this.toastr.success(response.message, 'Success!');
-          this.ngOnInit();
-        }
-      });
-    }
-  }
+
+
 }

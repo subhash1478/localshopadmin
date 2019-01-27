@@ -5,7 +5,7 @@ import { OrderdetailsComponent } from './orderdetails.component';
 
 const routes: Routes = [{
   path: '', component: OrderComponent,
-    children: [
+  children: [
     {
       path: 'detail/:id',
       component: OrderdetailsComponent

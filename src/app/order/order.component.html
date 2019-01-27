@@ -1,17 +1,6 @@
 <app-sidemenu></app-sidemenu>
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1>
-      Data Tables
-      <small>advanced tables</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Order</a></li>
-      <li><a href="#">Tables</a></li>
-      <li class="active">Data tables</li>
-    </ol>
-  </section>
-  <section class="content">
+  <section *ngIf="view">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
@@ -20,86 +9,64 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-                <router-outlet></router-outlet>
-
-              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="action('add')"  data-target="#myModal">Add</button>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                     <th scope="col">Order id</th>
-                     <th scope="col">Order date</th>
-                     <th scope="col">Order status</th>
-                     <th scope="col">Driver</th>
-
-                    <th scope="col">user</th>
-                    <th scope="col">shop</th>
-             
-                    <th scope="col">totalprice</th>
-                    <th scope="col">Action</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of orderList;let i = index">
-                    <th scope="row">{{i+1}}</th>
-                    <td> <a  [routerLink]="['detail', item.order.id]">{{item.order.orderid}}</a> </td>
-
-                    <td>{{item.order.createdAt|date}} </td>
-                    <td>{{(item.order.status===0)?'pending':'delivered'}} </td>
-                    <td> <button  class="btn btn-warning btn-xs" *ngIf="item.order.driverid===null">add</button>
-                      <span  *ngIf="item.order.driverid!=null">
-                        {{item.order.driverid.driver_first_name}}
-                        {{item.order.driverid.driver_last_name}}
-                      
-                      </span>
-                    </td>
-                    <td>{{item.order.userid.firstname}} {{item.order.userid.lastname}} </td>
-                    <td>{{item.order.shopid.title}} </td>
-                    <td>{{item.order.totalprice|currency:'INR'}} </td>
-                 
-                    <td> <button type="button" class="btn btn-info btn-xs" data-toggle="modal" (click)="edit(item)" data-target="#myModal">Edit</button>
-                      <td> <button type="button" class="btn btn-danger btn-xs" 
-                         (click)="delete(item)"  >Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
- 
-              </div>
-            </div>  </div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{{crud|uppercase}} Category</h4>
-          </div>
-          <div class="modal-body">
-            <div class="box box-primary">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInput1">Title</label>
-                  <input type="text" name="title" class="form-control"  placeholder="" [(ngModel)]="cat.title"  >
-                </div>
-                <div class="form-group">
-                  <label for="exampleInput1">Image</label>
-                  <input 
-                  style="display: none" 
-                  type="file" (change)="onFileChanged($event)" 
-                  #fileInput>
-                  <button (click)="fileInput.click()">Select File</button>
-                </div>
-              </div>
+              <button type="button" class="btn btn-warning btn-xs" (click)="view=!view">Close</button>
+              <router-outlet></router-outlet>
             </div>
-            <button type="button" class="btn btn-default"  (click)="addCategory()" >{{crud|uppercase}}</button>
           </div>
         </div>
       </div>
     </div>
+
+  </section>
+  <section class="content" *ngIf="!view">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Order Management</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+
+
+              <p>Range</p>
+                    <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"></p-calendar>
+                    <p-button icon="pi pi-search"  ></p-button>
+
+              <p-table [columns]="cols" #dt [value]="orderList" [tableStyle]="{'table-layout':'auto'}" [(selection)]="selectedItem"
+                [paginator]="true" [rows]="15" [responsive]="true" selectionMode="single" dataKey="id">
+                <ng-template pTemplate="caption">
+                  
+                      
+                   <button (click)="view=!view" *ngIf="selectedItem" [routerLink]="['detail', selectedItem.id]" pButton
+                    type="button" label="View" icon="pi pi-eye"></button>
+
+                  <div style="text-align: right">
+                    <input type="search" pTooltip="search" tooltipPosition="top" pInputText size="50" placeholder="Filter"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-item>
+                  <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                    <td *ngFor="let col of cols">
+                      {{item[col.field]}}
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
