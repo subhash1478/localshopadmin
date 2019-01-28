@@ -5,6 +5,7 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './login/login.module#LoginModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+  { path: 'users', loadChildren: './users/users.module#UsersModule' },
   { path: 'driver', loadChildren: './driver/driver.module#DriverModule' },
   { path: 'category', loadChildren: './category/category.module#CategoryModule' },
   {

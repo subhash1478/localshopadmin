@@ -16,7 +16,6 @@
         </div>
       </div>
     </div>
-
   </section>
   <section class="content" *ngIf="!view">
     <div class="row">
@@ -27,20 +26,15 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-
-
+              <p>Total Sales {{totalprice|currency:'INR'}}</p>
               <p>Range</p>
-                    <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"></p-calendar>
-                    <p-button icon="pi pi-search"  ></p-button>
-
+              <p-calendar [(ngModel)]="rangeDates" selectionMode="range" ></p-calendar>
+              <p-button (click)="setData()" icon="pi pi-search"></p-button>
               <p-table [columns]="cols" #dt [value]="orderList" [tableStyle]="{'table-layout':'auto'}" [(selection)]="selectedItem"
                 [paginator]="true" [rows]="15" [responsive]="true" selectionMode="single" dataKey="id">
                 <ng-template pTemplate="caption">
-                  
-                      
-                   <button (click)="view=!view" *ngIf="selectedItem" [routerLink]="['detail', selectedItem.id]" pButton
+                  <button (click)="view=!view" *ngIf="selectedItem" [routerLink]="['detail', selectedItem.id]" pButton
                     type="button" label="View" icon="pi pi-eye"></button>
-
                   <div style="text-align: right">
                     <input type="search" pTooltip="search" tooltipPosition="top" pInputText size="50" placeholder="Filter"
                       (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">

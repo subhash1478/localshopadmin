@@ -1,172 +1,82 @@
 <app-sidemenu></app-sidemenu>
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1>
-      Data Tables
-      <small>advanced tables</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Tables</a></li>
-      <li class="active">Data tables</li>
-    </ol>
-  </section>
-  <section class="content">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">User managment</h3>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="ui-g ui-fluid">
-                <div class="ui-g-12 ui-md-6">
-                  <div class="ui-inputgroup">
-                    <button pTooltip="Add new User" label="Add" pButton type="button" icon="pi pi-plus" iconPos="left"
-                      data-toggle="modal" (click)="action('add')" data-target="#myModal"></button>
-                  </div>
-                </div>
-                <div class="ui-g-12 ui-md-6">
-                  <div class="ui-inputgroup">
-                    <button pButton type="button" label="Search"></button>
-                    <input pTooltip="Search User" type="text" [(ngModel)]="searchTerm" pInputText placeholder="Keyword">
-                  </div>
-                </div>
-              </div>
-              <p-table #dt [value]="filteredVendors" [tableStyle]="{'table-layout':'auto'}" [paginator]="true" [rows]="8"
-                [responsive]="true" selectionMode="single" dataKey="title">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th>Username</th>
-                    <th>address</th>
-                    <th>city</th>
-                    <th>email</th>
-                    <th>phone</th>
-                    <th>shopname</th>
-                    <th>state</th>
-                    <th>type</th>
-                    <th>joined</th>
-                    <th>Action</th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-item>
-                  <tr>
-                    <td>{{item.firstname}} {{item.lastname}}</td>
-                    <td>{{item.address}}</td>
-                    <td>{{item.city}}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.phone}}</td>
-                    <td>{{item.shopname}}</td>
-                    <td>{{item.state}}</td>
-                    <td>
-                      <select pTooltip="Change user role {{item.type === 'customer' ? 'Vendor' : 'customer'}}"
-                        tooltipPosition="top" [(ngModel)]="item.type" [ngClass]="item.type === 'customer' ? 'btn-success' : 'btn-primary'"
-                        (change)="change_type($event.target.value,item.email,item._id)">
-                        <option value="customer">
-                          Customer
-                        </option>
-                        <option value="vendor">
-                          Vendor
-                        </option>
-                      </select>
-                    </td>
-                    <td>{{item.createdAt|date}}</td>
-                    <td>
-                      <button pTooltip="Edit" pButton type="button" data-toggle="modal" (click)="edit(item)"
-                        data-target="#myModal" icon="pi pi-pencil" iconPos="left" class="ui-button-info"></button>
-                    </td>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
-                  <div style="text-align: left">
-                    <code>
-                      <div *ngFor="let item of userda| keyvalue">
-                        {{ item.key }} - {{ item.value }}
+        <section class="content-header">
+                <h1>
+                  Data Tablesss
+                  <small>advanced tables</small>
+                </h1>
+                <ol class="breadcrumb">
+                  <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                  <li><a href="#">Tables</a></li>
+                  <li class="active">Data tables</li>
+                </ol>
+              </section>
+        <section class="content">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                  <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                      <div class="inner">
+                        <h3>150</h3>
+          
+                        <p>New Orders</p>
                       </div>
-                    </code>
+                      <div class="icon">
+                        <i class="ion ion-bag"></i>
+                      </div>
+                      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
                   </div>
-                </ng-template>
-              </p-table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{crud|uppercase}} User</h4>
-      </div>
-      <div class="modal-body">
-        <div class="box box-primary">
-          <div class="box-body">
-            <div class="form-group">
-              <label for="">Category</label>
-              <select name="category" class="form-control" [(ngModel)]="user.category">
-                <option *ngFor="let item of category" [value]="item._id">{{item.title}}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="">Shop name</label>
-              <input name="shopname" type="text" class="form-control" [(ngModel)]="user.shopname">
-            </div>
-            <div class="form-group">
-              <label for="">Firstname</label>
-              <input name="firstname" type="text" class="form-control" [(ngModel)]="user.firstname">
-            </div>
-            <div class="form-group">
-              <label for="">Lastname</label>
-              <input type="text" class="form-control" [(ngModel)]="user.lastname">
-            </div>
-            <div class="form-group">
-              <label for="">Email address</label>
-              <input name="email" type="email" class="form-control" [(ngModel)]="user.email" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">Password</label>
-              <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="user.password">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">address</label>
-              <input type="text" name="address" class="form-control" placeholder="" [(ngModel)]="user.address">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">city</label>
-              <input type="text" name="city" class="form-control" placeholder="" [(ngModel)]="user.city">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">state</label>
-              <input type="text" name="state" class="form-control" placeholder="" [(ngModel)]="user.state">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">country</label>
-              <input type="text" name="country" class="form-control" placeholder="" [(ngModel)]="user.country">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">phone</label>
-              <input type="text" name="phone" class="form-control" placeholder="" [(ngModel)]="user.phone">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">zip</label>
-              <input type="text" name="zip" class="form-control" placeholder="" [(ngModel)]="user.zip">
-            </div>
-            <div class="form-group">
-              <label for="exampleInput1">about</label>
-              <input type="text" name="about" class="form-control" placeholder="" [(ngModel)]="user.about">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="addUser()">Save</button>
-      </div>
-    </div>
-  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                      <div class="inner">
+                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+          
+                        <p>Bounce Rate</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                      </div>
+                      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                      <div class="inner">
+                        <h3>44</h3>
+          
+                        <p>User Registrations</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                      </div>
+                      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                      <div class="inner">
+                        <h3>65</h3>
+          
+                        <p>Unique Visitors</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                      </div>
+                      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <!-- ./col -->
+                </div>
+                <!-- /.row -->
+            
+                
+              </section>
 </div>
